@@ -27,6 +27,12 @@ public class Sudoku {
         numbers = sudoku;
     }
     
+    /**
+     * Finds all candidates (numbers that may be filled in a given cell)
+     * @param row 
+     * @param col
+     * @return  candidates.
+     */
     public ArrayList<Integer> candidates(int row, int col) {
         ArrayList<Integer> nums = new ArrayList();
         for (int i = 1; i <= length; i++) {
@@ -37,6 +43,11 @@ public class Sudoku {
         return nums;
     }
     
+    /**
+     * Finds next empty cell in a sudoku.
+     * Order is from left to right then top to bottom.
+     * @return  coordinates of the next empty cell [x, y].
+     */
     public int[] nextFreeSlot() {
         int[] slot = new int[2];
         for (int i = 0; i < length; i++) {
@@ -99,7 +110,13 @@ public class Sudoku {
         }
         return false;
     }
-
+    
+    /**
+     * To pretty print sudoku.
+     * TODO: fix charset problem, universalize.
+     * @param a number of number in a sudoku.
+     * @return  Textual representation of the sudoku.
+     */
     String f(int a) {
         String p3 = "012121213121212131212121312121214";
         String p2 = "012131214";
@@ -164,10 +181,19 @@ public class Sudoku {
         return f(length);
     }
 
+    /**
+     * 
+     * @return number of characters used in the sudoku.
+     */
     public int getLength() {
         return length;
     }
-
+    
+    /**
+     * 
+     * @return  Number of cells in one side of a square.
+     *          It is equal to square root if length.
+     */
     public int getSquareSize() {
         return squareSize;
     }

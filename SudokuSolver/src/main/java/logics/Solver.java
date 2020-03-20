@@ -5,14 +5,22 @@ import java.util.HashMap;
 import java.util.List;
 import ss.sudokusolver.Sudoku;
 
-
 public class Solver {
     Sudoku sudoku;
 
+    /**
+     *Solver containing logic to solve sudoku.
+     * @param sudoku
+     */
     public Solver(Sudoku sudoku) {
         this.sudoku = sudoku;
     }
     
+    /**
+     * Logic that uses human like methods to solve a sudoku.
+     * @return  true if sudoku is solved
+     *          false if the sudoku cannot be solved with this method.
+     */
     public boolean humanSolver() {
         boolean resume = true;
         while (resume) {
@@ -21,11 +29,24 @@ public class Solver {
         return sudoku.isSolved();
     }
     
+    /**
+     * Solves sudoku using place-finding method repeatedly.
+     * @return true if sudoku is solved
+     *          false if the sudoku cannot be solved with this method.
+     */
     public boolean fillUsingPlaceFinding() {
         while (placeFinding());
         return sudoku.isSolved();
     }
     
+    /**
+     * Place-finding logic implementation.
+     * Finds all candidates (numbers that may be entered in a cell)
+     * in a row, column or box. Inserts numbers with only one available cell.
+     * @return  true if a change has been made
+     *          false if no change has been made
+     *          i.e. sudoku cannot be solved with this method.
+     */
     public boolean placeFinding() {
         boolean changed = false;
         HashMap<Integer, List<Integer>> nums = new HashMap();
@@ -98,11 +119,24 @@ public class Solver {
         return changed;
     }
     
+    /**
+     * Solves sudoku with candidate-check method.
+     * @return  true if sudoku was solved
+     *          false if sudoku cannot be solved with this method.
+     */
     public boolean fillUsingCandidateCheck() {
         while(candidateCheck());
         return sudoku.isSolved();
     }
     
+    /**
+     * Candidate-check logic implementation.
+     * Finds all candidates (numbers that may be entered in a cell).
+     * If only candidate is present, it is inserted in that cell.
+     * @return  true if a change has been made
+     *          false if no change has been made
+     *          i.e. sudoku cannot be solved with this method.
+     */
     public boolean candidateCheck() {
         boolean changed = false;
         for (int i = 0; i < sudoku.getLength(); i++) {
@@ -119,6 +153,16 @@ public class Solver {
         return changed;
     }
     
+    /**
+     * Backtracking logic implementation.
+     * Tries all numbers to every empty cell in order.
+     * After filling in a number checks if all (sudoku rule) conditions are met.
+     *  - if yes, then proceeds to the next cell recursively.
+     *  - if no, then tries a bigger number or returns false
+     *  and increases an earlier filled cell.
+     * @return  true if the sudoku is solved
+     *          false if the sudoku cannot be solved.
+     */
     public boolean backtrack() {
         int[] slot = sudoku.nextFreeSlot();
         if (slot[0] != -1) {
@@ -137,6 +181,10 @@ public class Solver {
         return true;
     }
 
+    /**
+     *
+     * @return
+     */
     public Sudoku getSudoku() {
         return sudoku;
     }

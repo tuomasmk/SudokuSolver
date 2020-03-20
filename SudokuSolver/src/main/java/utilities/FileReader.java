@@ -11,6 +11,13 @@ public class FileReader {
     public FileReader() {
     }
     
+    /**
+     * Reads sudoku from a file containing string of numbers in the first column.
+     * @param size      sudoku size.
+     * @param filename  to import from.
+     * @return  imported sudoku.
+     * @throws FileNotFoundException 
+     */
     public Sudoku readNumbersOnly(int size, String filename) throws FileNotFoundException {
         File file = new File(filename);
         Scanner scanner = new Scanner(file);
@@ -44,6 +51,14 @@ public class FileReader {
         return sudoku;
     }
     
+    /**
+     * Reads sudoku from comma separated file.
+     * Each row is on its own row separated with commas.
+     * Size of the sudoku is interpreted from the file.
+     * @param filename  sudoku is read from.
+     * @return  imported sudoku.
+     * @throws FileNotFoundException 
+     */
     public Sudoku readCommaSeparated(String filename) throws FileNotFoundException {
         File file = new File(filename);
         Scanner scanner = new Scanner(file);
