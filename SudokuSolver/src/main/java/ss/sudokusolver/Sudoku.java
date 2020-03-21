@@ -48,7 +48,7 @@ public class Sudoku {
      * Order is from left to right then top to bottom.
      * @return  coordinates of the next empty cell [x, y].
      */
-    public int[] nextFreeSlot() {
+    public int[] nextFreeCell() {
         int[] slot = new int[2];
         for (int i = 0; i < length; i++) {
             for (int j = 0; j < length; j++) {
@@ -65,7 +65,7 @@ public class Sudoku {
     }
     
     public boolean isSolved() {
-        return nextFreeSlot()[0] == -1;
+        return nextFreeCell()[0] == -1;
     }
     
     public int getNumber(int row, int col) {
@@ -77,10 +77,10 @@ public class Sudoku {
     }
     
     public boolean canPlace(int num, int row, int col) {
-        return !isInBox(num, col, row) && !isInRow(num, col, row) && !isInCol(num, col, row);
+        return !isInBox(num, row, col) && !isInRow(num, row, col) && !isInCol(num, row, col);
     }
     
-    public boolean isInBox(int num, int col, int row) {
+    public boolean isInBox(int num, int row, int col) {
         int startCol = col / squareSize * squareSize;
         int startRow = row / squareSize * squareSize;
         for (int i = startRow; i < startRow + squareSize; i++) {
@@ -93,7 +93,7 @@ public class Sudoku {
         return false;
     }
     
-    public boolean isInRow(int num, int col, int row) {
+    public boolean isInRow(int num, int row, int col) {
         for (int j = 0; j < length; j++) {
             if (j != col && numbers[row][j] == num) {
                 return true;
@@ -102,7 +102,7 @@ public class Sudoku {
         return false;
     }
     
-    public boolean isInCol(int num, int col, int row) {
+    public boolean isInCol(int num, int row, int col) {
         for (int i = 0; i < length; i++) {
             if (i != row && numbers[i][col] == num) {
                 return true;

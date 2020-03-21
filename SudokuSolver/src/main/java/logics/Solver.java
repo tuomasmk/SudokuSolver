@@ -164,7 +164,7 @@ public class Solver {
      *          false if the sudoku cannot be solved.
      */
     public boolean backtrack() {
-        int[] slot = sudoku.nextFreeSlot();
+        int[] slot = sudoku.nextFreeCell();
         if (slot[0] != -1) {
             for (int i = 1; i <= sudoku.getLength(); i++) {
                 if (sudoku.canPlace(i, slot[0], slot[1])) {
