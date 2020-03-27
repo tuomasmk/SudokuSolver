@@ -7,7 +7,43 @@ public class Sudoku {
     int squareSize;
     int length;
     int[][] numbers;
+    int[] empty;
+    int[][][] candidates;
+    int[][] graphReferencedMatrix;
+    
+    private void initializeCandidates() {
+        candidates = new int[length][length][length];
+        for (int i = 0; i < length; i++) {
+            for (int j = 0; j < length; j++) {
+                for (int k = 0; k < length; k++) {
+                    candidates[i][j][k] = 0;
+                }
+            }
+        }
+    }
+    
+    private int[][] deepCopyIntMatrix(int[][] input) {
+        if (input == null) {
+            return null;
+        }
+        int[][] result = new int[input.length][];
+        for (int r = 0; r < input.length; r++) {
+            result[r] = input[r].clone();
+        }
+            return result;
+        }
+    
+    public Sudoku copy(Sudoku from) {
+        Sudoku s = new Sudoku();
+        s.length = from.length;
+        s.squareSize = from.squareSize;
+        s.numbers = deepCopyIntMatrix(from.numbers);
+        return s;
+    }
 
+    public Sudoku() {
+    }
+    
     public Sudoku(int length) {
         if (length > 0) {
             this.length = length;
@@ -27,6 +63,53 @@ public class Sudoku {
         numbers = sudoku;
     }
     
+    public void initializeEmpty() {
+        empty = new int[length * length];
+        int count = 0;
+        for (int i = 0; i < length; i++) {
+            for (int j = 0; j < length; j++) {
+                if (numbers[i][j] == 0) {
+                    empty[count++] = i * length + j;
+                }
+            }
+        }
+    }
+    
+    public void initializeGRM() {
+        graphReferencedMatrix = new int[length * length][(length - 1) * 2 + (squareSize - 1) * (squareSize - 1)];
+        int row, col, count, p, startCol, startRow;
+        for (int k = 0; k < length * length; k++) {
+            row = k / length;
+            col = k % length;
+            count = 0;
+            for (int j = 0; j < length; j++) {
+                p = row * length + j;
+                if (!(row * length + col == p)) {
+                    graphReferencedMatrix[k][count] = p;
+                    count++;
+                }
+            }
+            for (int i = 0; i < length; i++) {
+                p = i * length + col;
+                if (!(row * length + col == p)) {
+                    graphReferencedMatrix[k][count] = p;
+                    count++;
+                }
+            }
+            startCol = col / squareSize * squareSize;
+            startRow = row / squareSize * squareSize;
+            for (int i = startRow; i < startRow + squareSize; i++) {
+                for (int j = startCol; j < startCol + squareSize; j++) {
+                    p = i * length + j;
+                    if (!(row * length + col == p || i == row || j == col)) {
+                        graphReferencedMatrix[k][count] = p;
+                        count++;
+                    }
+                }
+            }
+        }
+    }
+    
     /**
      * Finds all candidates (numbers that may be filled in a given cell)
      * @param row 
@@ -41,6 +124,22 @@ public class Sudoku {
             }
         }
         return nums;
+    }
+    
+    public void findAllCandidates() {
+        if (candidates == null) {
+            initializeCandidates();
+        }
+        for (int i = 0; i < length; i++) {
+            for (int j = 0; j < length; j++) {
+                if (numbers[i][j] == 0) {
+                    ArrayList<Integer> cs = candidates(i, j);
+                    for (int candidate:cs) {
+                        candidates[i][j][candidate - 1] = 1;
+                    }
+                }
+            }
+        }
     }
     
     /**
@@ -196,6 +295,22 @@ public class Sudoku {
      */
     public int getSquareSize() {
         return squareSize;
+    }
+
+    public int[] getEmpty() {
+        return empty;
+    }
+
+    public int[][] getGraphReferencedMatrix() {
+        return graphReferencedMatrix;
+    }
+    
+    /**
+     * Array containing candidates for all cells.
+     * @return array of all candidates, might not have been initialised.
+     */
+    public int[][][] getCandidates() {
+        return candidates;
     }
 }
 

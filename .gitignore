@@ -4,6 +4,8 @@
 /SudokuSolver/sudoku3.txt
 /SudokuSolver/sudoku.csv
 /SudokuSolver/sudoku3.csv
+/SudokuSolver/sudoku2.csv
+/SudokuSolver/sudoku1.csv
 target/
 pom.xml.tag
 pom.xml.releaseBackup

@@ -125,7 +125,7 @@ public class Solver {
      *          false if sudoku cannot be solved with this method.
      */
     public boolean fillUsingCandidateCheck() {
-        while(candidateCheck());
+        while (candidateCheck());
         return sudoku.isSolved();
     }
     
@@ -158,8 +158,8 @@ public class Solver {
      * Tries all numbers to every empty cell in order.
      * After filling in a number checks if all (sudoku rule) conditions are met.
      *  - if yes, then proceeds to the next cell recursively.
-     *  - if no, then tries a bigger number or returns false
-     *  and increases an earlier filled cell.
+     *  - if no, then tries a bigger number 
+     *  - or returns false and increases an earlier filled cell.
      * @return  true if the sudoku is solved
      *          false if the sudoku cannot be solved.
      */
@@ -182,10 +182,84 @@ public class Solver {
     }
 
     /**
+     * Backtracking logic implementation.
+     * Tries all possible numbers to every empty cell in order.
+     * After filling in a number checks if all (sudoku rule) conditions are met.
+     *  - if yes, then proceeds to the next cell recursively.
+     *  - if no, then tries a bigger number 
+     *  - or returns false and increases an earlier filled cell.
+     * @return  true if the sudoku is solved
+     *          false if the sudoku cannot be solved.
+     */
+    public boolean backtractWithCandidates() {
+        sudoku.findAllCandidates();
+        int[] cell = sudoku.nextFreeCell();
+        if (cell[0] != -1) {
+            for (int k = 0; k < sudoku.getLength(); k++) {
+                if (sudoku.getCandidates()[cell[0]][cell[1]][k] != 0) {
+                    if (sudoku.canPlace(k + 1, cell[0], cell[1])) {
+                        sudoku.setNumber(k + 1, cell[0], cell[1]);
+                        if (backtractWithCandidates()) {
+                            return true;
+                        } else {
+                            sudoku.setNumber(0, cell[0], cell[1]);
+                        }
+                    }
+                }
+            }
+            return false;
+        }
+        return true;
+    }
+    
+    public boolean referenceGraph() {
+        sudoku.initializeEmpty();
+        sudoku.initializeGRM();
+        return backtrackWRG(0);
+    }
+        
+    public boolean backtrackWRG(int current) {
+        if (current >= sudoku.getEmpty().length) {
+            return true;
+        }
+        int row, col, slot, index, value;
+        ArrayList<Integer> used = new ArrayList();
+        slot = sudoku.getEmpty()[current];
+        row = slot / sudoku.getLength();
+        col = slot % sudoku.getLength();
+        for (int k = 0; k < sudoku.getGraphReferencedMatrix()[0].length; k++) {
+            index = sudoku.getGraphReferencedMatrix()[slot][k];
+            value = sudoku.getNumber(index / sudoku.getLength(), index % sudoku.getLength());
+            if (value != 0) {
+                used.add(value);
+            }
+        }
+        for (int i = 1; i <= sudoku.getLength(); i++) {
+            if (!(used.contains(i))) {
+                sudoku.setNumber(i, row, col);
+                if (backtrackWRG(current + 1)) {
+                    return true;
+                } else {
+                    sudoku.setNumber(0, row, col);
+                }
+            }
+        }
+        return false;
+    }
+    
+    public void findPreemptiveSets() {
+        
+    }
+
+    /**
      *
      * @return
      */
     public Sudoku getSudoku() {
         return sudoku;
+    }
+
+    public void setSudoku(Sudoku sudoku) {
+        this.sudoku = sudoku;
     }
 }

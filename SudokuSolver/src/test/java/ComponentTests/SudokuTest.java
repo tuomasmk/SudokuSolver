@@ -48,7 +48,7 @@ public class SudokuTest {
         assertEquals(freeCell[0], 0);
         assertEquals(freeCell[1], 1);
     }
-    
+
     @Test
     public void correctNumberIsReturned() {
         assertEquals(sudoku.getNumber(0, 0), 4);
