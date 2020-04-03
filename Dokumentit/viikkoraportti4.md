@@ -13,4 +13,5 @@ Lisätty testejä, korjattu ilmenneitä virheitä. 3h.
 
 Koodin refaktorointi. Tehty omat luokat eri ratkaisijoille. Ratkaisijat perivät perusluokan. Pilkottu suuria metodeja pienemmiksi. Poistettu copy-paste koodia. Korjattu pääohjelma ja testit uuden rakenteen mukaisiksi. 6h.
 
-## 3.4. Dokumentaatio. 2h.
+## 3.4. 
+Dokumentaatio. 2h.
