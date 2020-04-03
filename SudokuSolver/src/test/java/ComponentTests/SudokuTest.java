@@ -1,6 +1,5 @@
 package ComponentTests;
 
-import java.util.ArrayList;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
@@ -108,13 +107,6 @@ public class SudokuTest {
     @Test
     public void cannotPlace() {
         assertFalse(sudoku.canPlace(3, 0, 1));
-    }
-    
-    @Test
-    public void candidatesAreCorrect() {
-        ArrayList<Integer> candidates = sudoku.candidates(0, 1);
-        assertEquals(candidates.size(), 1);
-        assertEquals((int) candidates.get(0), 1);
     }
     
     @Test
