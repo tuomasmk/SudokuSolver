@@ -1,5 +1,5 @@
 # Sudoku solver
-Backtracking periaatteella toimiva sudokuiden ratkaisija.
+Backtracking ja "ihmisratkaisija" periaatteilla toimiva sudokuiden ratkaisija.
 
 [Määrittelydokumentti](https://github.com/tuomasmk/SudokuSolver/blob/master/Dokumentit/m%C3%A4%C3%A4rittely.md)
 
@@ -15,6 +15,8 @@ Backtracking periaatteella toimiva sudokuiden ratkaisija.
 
 [Viikkoraportti 4](https://github.com/tuomasmk/SudokuSolver/blob/master/Dokumentit/viikkoraportti4.md)
 
+[Viikkoraportti 5](https://github.com/tuomasmk/SudokuSolver/blob/master/Dokumentit/viikkoraportti5.md)
+
 ## Käyttöohjeita
 
 Komentorivitoiminnot
@@ -28,6 +30,7 @@ Testit suoritetaan komennolla
 Testikattavuusraportti luodaan komennolla
 
 `mvn test jacoco:report`
+
 ### Suoritettava versio
 Ohjelmasta luodaan suoritettava versio komennolla
 
@@ -37,6 +40,7 @@ Ohjelmasta luodaan suoritettava versio komennolla
 Chekckstyle tarkstuksen voi suorittaa komennolla
 
 `mvn checkstyle:checkstyle`
+
 ### Javadoc
 JavaDoc luodaan komennolla
 

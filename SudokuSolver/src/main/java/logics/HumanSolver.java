@@ -1,7 +1,8 @@
 package logics;
 
+import dataStructures.Map;
+import dataStructures.Stack;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import ss.sudokusolver.Sudoku;
 
@@ -35,9 +36,12 @@ public class HumanSolver extends Solver {
         return sudoku.isSolved();
     }
     
-    private boolean setValuesWithOnlyOnePlace(int length, HashMap<Integer, List<Integer>> nums) {
+    private boolean setValuesWithOnlyOnePlace(int length, Map<Integer, List<Integer>> nums) {
         boolean changed = false;
-        for (int k:nums.keySet()) {
+        Stack keys = nums.keys();
+        while (!keys.isEmpty()) {
+            int k = keys.pop();
+//        for (int k:nums.keySet()) {
             if (nums.get(k) != null && nums.get(k).size() == 1) {
                 int value = nums.get(k).get(0);
                 int row = value / length;
@@ -49,15 +53,16 @@ public class HumanSolver extends Solver {
         return changed;
     }
     
-    public boolean placeFindingRow(int length, HashMap<Integer, List<Integer>> nums) {
+    public boolean placeFindingRow(int length, Map<Integer, List<Integer>> nums) {
         boolean changed = false;
-        ArrayList<Integer> temp;
+        Stack temp;
         for (int i = 0; i < length; i++) {
             nums.clear();
             for (int j = 0; j < length; j++) {
                 if (sudoku.getNumber(i, j) == 0) {
                     temp = candidates(i, j);
-                    for (int k:temp) {
+                    while (!temp.isEmpty()) {
+                        int k = temp.pop();
                         if (!nums.containsKey(k)) {
                             nums.put(k, new ArrayList());
                         }
@@ -70,15 +75,16 @@ public class HumanSolver extends Solver {
         return changed;
     }
     
-    public boolean placeFindingCol(int length, HashMap<Integer, List<Integer>> nums) {
+    public boolean placeFindingCol(int length, Map<Integer, List<Integer>> nums) {
         boolean changed = false;
-        ArrayList<Integer> temp;
+        Stack temp;
         for (int j = 0; j < length; j++) {
             nums.clear();
             for (int i = 0; i < length; i++) {
                 if (sudoku.getNumber(i, j) == 0) {
                     temp = candidates(i, j);
-                    for (int k:temp) {
+                    while (!temp.isEmpty()) {
+                        int k = temp.pop();
                         if (!nums.containsKey(k)) {
                             nums.put(k, new ArrayList());
                         }
@@ -91,9 +97,9 @@ public class HumanSolver extends Solver {
         return changed;
     }
     
-    public boolean placeFindingBox(int length, int squareSize, HashMap<Integer, List<Integer>> nums) {
+    public boolean placeFindingBox(int length, int squareSize, Map<Integer, List<Integer>> nums) {
         boolean changed = false;
-        ArrayList<Integer> temp;
+        Stack temp;
         for (int i = 0; i < squareSize; i++) {
             for (int j = 0; j < squareSize; j++) {
                 nums.clear();
@@ -103,7 +109,8 @@ public class HumanSolver extends Solver {
                         int col = j * squareSize + l;
                         if (sudoku.getNumber(row, col) == 0) {
                             temp = candidates(row, col);
-                            for (int m:temp) {
+                            while (!temp.isEmpty()) {
+                                int m = temp.pop();
                                 if (!nums.containsKey(m)) {
                                     nums.put(m, new ArrayList());
                                 }
@@ -128,7 +135,7 @@ public class HumanSolver extends Solver {
      */
     public boolean placeFinding() {
         boolean changed;
-        HashMap<Integer, List<Integer>> nums = new HashMap();
+        Map<Integer, List<Integer>> nums = new Map();
         //Rows
         changed = placeFindingRow(sudoku.getLength(), nums);
         //Cols
@@ -161,9 +168,9 @@ public class HumanSolver extends Solver {
         for (int i = 0; i < sudoku.getLength(); i++) {
             for (int j = 0; j < sudoku.getLength(); j++) {
                 if (sudoku.getNumber(i, j) == 0) {
-                    ArrayList<Integer> candidates = candidates(i, j);
-                    if (candidates.size() == 1) {
-                        sudoku.setNumber(candidates.get(0), i, j);
+                    Stack temp = candidates(i, j);
+                    if (temp.size() == 1) {
+                        sudoku.setNumber(temp.pop(), i, j);
                         changed = true;
                     }
                 }

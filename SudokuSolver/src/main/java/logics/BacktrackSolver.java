@@ -3,7 +3,6 @@
 
 package logics;
 
-import java.util.ArrayList;
 import ss.sudokusolver.Sudoku;
 
 
@@ -41,7 +40,32 @@ public class BacktrackSolver extends Solver {
         return true;
     }
     
-        public boolean btwc() {
+    public boolean btwe() {
+        sudoku.initializeEmpty();
+        return backtrackWEmpty(0);
+    }
+    
+    public boolean backtrackWEmpty(int current) {
+        if (current >= sudoku.getEmpty().length) {
+            return true;
+        }
+        int slot = sudoku.getEmpty()[current];
+        int row = slot / sudoku.getLength();
+        int col = slot % sudoku.getLength();
+        for (int i = 1; i <= sudoku.getLength(); i++) {
+            if (sudoku.canPlace(i, row, col)) {
+                sudoku.setNumber(i, row, col);
+                if (backtrackWEmpty(current + 1)) {
+                    return true;
+                } else {
+                    sudoku.setNumber(0, row, col);
+                }
+            }
+        }
+        return false;
+    }
+    
+    public boolean btwc() {
         findAllCandidates();
         return backtractWithCandidates();
     }

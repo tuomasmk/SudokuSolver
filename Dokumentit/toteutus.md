@@ -29,12 +29,12 @@ Algoritmi on optimoitu versio backtrack-algoritmista. Algoritmissa pidetään ki
 
 Ratkaistaan 1000000 sudokua ja lasketaan ratkaisemiseen käytetty aika. Tulosten perusteella ihmisratkaisija ja backtrack-algoritmia ovat käytännössä yhtä nopeita. "Optimoidut" backtrack algoritmit vaihtoehtokirjanpito ja Reference graph -ratkaisija ovat selvästi hitaampi, vaikka reference graph -algorimtin pitäisi olla jopa nopeampi kuin backtrack ratkaisija (Chatterjee, 2014).
 
-Algoritmi       | Aika (ms) (10^4 sudokua) | Aika (ms) (10^5 sudokua)
---------------- | ------------------------ | -----------------------
-Ihmis           | 497                      | 4580
-Backtrack       | 464                      | 4644
-+vaihtoehto     | 771                      | 7820
-Reference graph | 971                      | 8654
+Algoritmi       | Aika (ms) (10^4 sudokua) | Aika (ms) (10^5 sudokua) | Aika (s) (10^6 sudokua)
+--------------- | ------------------------ | ------------------------ | -----------------------
+Ihmis           | 497                      | 4580                     | 45332
+Backtrack       | 464                      | 4644                     | 46851
++vaihtoehto     | 771                      | 7820                     | 75595
+Reference graph | 971                      | 8654                     | 87826
 
 
 ## Lähteet
