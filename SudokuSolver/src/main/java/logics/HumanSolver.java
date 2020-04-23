@@ -13,6 +13,18 @@ public class HumanSolver extends Solver {
         super(sudoku);
     }
     
+    public boolean solveWbt() {
+        boolean resume = true;
+        while (resume) {
+            resume = candidateCheck() || placeFinding();
+        }
+        if (!sudoku.isSolved()) {
+            BacktrackSolver bs = new BacktrackSolver(sudoku);
+            bs.backtrack();
+        }
+        return sudoku.isSolved();
+    }
+    
         /**
      * Logic that uses human like methods to solve a sudoku.
      * @return  true if sudoku is solved

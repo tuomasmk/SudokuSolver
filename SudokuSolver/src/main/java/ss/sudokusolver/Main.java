@@ -70,17 +70,17 @@ public class Main {
     }
     
     public static void main(String[] args) throws FileNotFoundException {
-        comparePerformances();
+        //comparePerformances();
 
-        
-//        Sudoku sudoku = fr.readCommaSeparated("sudoku1.txt");
+        FileReader fr = new FileReader();
+        Sudoku sudoku = fr.readCommaSeparated("sudoku16.txt");
         //Sudoku sudoku = fr.readNumbersOnly(9, "sudoku.csv");
-/*
-        humanSolver solver = new humanSolver(sudoku);
+
+        HumanSolver solver = new HumanSolver(sudoku);
         System.out.println(sudoku);
-        solver.fillUsingPlaceFinding();
+        solver.solveWbt();
         System.out.println(sudoku);
-*/
+
         // for performance testing        
 
     }
