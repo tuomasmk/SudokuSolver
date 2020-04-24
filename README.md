@@ -17,6 +17,8 @@ Backtracking ja "ihmisratkaisija" periaatteilla toimiva sudokuiden ratkaisija.
 
 [Viikkoraportti 5](https://github.com/tuomasmk/SudokuSolver/blob/master/Dokumentit/viikkoraportti5.md)
 
+[Viikkoraportti 6](https://github.com/tuomasmk/SudokuSolver/blob/master/Dokumentit/viikkoraportti6.md)
+
 ## Käyttöohjeita
 
 Komentorivitoiminnot
