@@ -43,5 +43,20 @@ public class MapTest {
         assertTrue(map.containsKey(4));
         assertFalse(map.containsKey(5));
     }
+    
+    @Test
+    public void testMapSize() {
+        assertEquals(128, map.size());
+    }
+    
+    @Test
+    public void testMapMultipleHitsOnSamePlace() {
+        map.put(129, 5);
+        assertEquals(5, map.get(129));
+        assertEquals(1, map.get(1));
+        map.put(1, 2);
+        assertEquals(5, map.get(129));
+        assertEquals(2, map.get(1));
+    }
 
 }
