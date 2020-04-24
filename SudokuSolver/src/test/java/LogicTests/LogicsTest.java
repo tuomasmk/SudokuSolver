@@ -124,7 +124,7 @@ public class LogicsTest {
         assertEquals(sudoku.getNumber(3, 3), 2);
     }
     
-/*    @Test
+    @Test
     public void testbackTrackWithCandidates() {
         BacktrackSolver solver = new BacktrackSolver(sudoku);
         solver.btwc();
@@ -144,7 +144,7 @@ public class LogicsTest {
         assertEquals(sudoku.getNumber(3, 1), 4);
         assertEquals(sudoku.getNumber(3, 2), 3);
         assertEquals(sudoku.getNumber(3, 3), 2);
-    }*/
+    }
     
     @Test
     public void testReferenceGraph() {

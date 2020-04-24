@@ -14,17 +14,18 @@ public class Main {
     
     public static void comparePerformances() throws FileNotFoundException {
         FileReader fr = new FileReader();
-        String filename = "hardest.txt";
-        Sudoku sudoku = fr.readMultipleNumbersOnly(9, filename);
+        String filename = "sudoku16.txt";
+        Sudoku sudoku = fr.readCommaSeparated(filename); //fr.readMultipleNumbersOnly(9, filename);
+        System.out.println(sudoku);
         HumanSolver hs = new HumanSolver(sudoku);
         BacktrackSolver bts = new BacktrackSolver(sudoku);
         ReferenceGraphSolver rgs = new ReferenceGraphSolver(sudoku);
         List<Sudoku> sudokus = new ArrayList();
-        int count = 0;
+/*        int count = 0;
         while (sudoku != null && count++ < 1) {
             sudokus.add(sudoku);
             sudoku = fr.readMultipleNumbersOnly(9, filename);
-        }
+        }*/
         long start, end;
         int solvedCount = 0;
         boolean solved;
@@ -69,20 +70,25 @@ public class Main {
         System.out.println("rg: " + (end - start));        
     }
     
-    public static void main(String[] args) throws FileNotFoundException {
-        //comparePerformances();
-
+    private static void testOne() throws FileNotFoundException {
         FileReader fr = new FileReader();
-        Sudoku sudoku = fr.readCommaSeparated("sudoku16.txt");
+        Sudoku sudoku = fr.readCommaSeparated("sudoku16easy.csv");
         //Sudoku sudoku = fr.readNumbersOnly(9, "sudoku.csv");
 
-        HumanSolver solver = new HumanSolver(sudoku);
+        //HumanSolver solver = new HumanSolver(sudoku);
+        BacktrackSolver bts = new BacktrackSolver(sudoku);
+        //ReferenceGraphSolver rgs = new ReferenceGraphSolver(sudoku);
         System.out.println(sudoku);
-        solver.solveWbt();
+        //rgs.solve();
+        bts.backtrack();
+        //solver.solveWbt();
         System.out.println(sudoku);
 
-        // for performance testing        
-
+    }
+    
+    public static void main(String[] args) throws FileNotFoundException {
+        //comparePerformances();
+        testOne();
     }
 
 }

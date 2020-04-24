@@ -68,17 +68,17 @@ public class HumanSolver extends Solver {
     public boolean placeFindingRow(int length, Map<Integer, List<Integer>> nums) {
         boolean changed = false;
         Stack temp;
-        for (int i = 0; i < length; i++) {
+        for (int r = 0; r < length; r++) { //row
             nums.clear();
-            for (int j = 0; j < length; j++) {
-                if (sudoku.getNumber(i, j) == 0) {
-                    temp = candidates(i, j);
+            for (int c = 0; c < length; c++) { //col
+                if (sudoku.getNumber(r, c) == 0) {
+                    temp = candidates(r, c);
                     while (!temp.isEmpty()) {
                         int k = temp.pop();
                         if (!nums.containsKey(k)) {
                             nums.put(k, new ArrayList());
                         }
-                        nums.get(k).add(i * length + j);
+                        nums.get(k).add(r * length + c);
                     }
                 }
             }
@@ -90,17 +90,17 @@ public class HumanSolver extends Solver {
     public boolean placeFindingCol(int length, Map<Integer, List<Integer>> nums) {
         boolean changed = false;
         Stack temp;
-        for (int j = 0; j < length; j++) {
+        for (int c = 0; c < length; c++) { //col
             nums.clear();
-            for (int i = 0; i < length; i++) {
-                if (sudoku.getNumber(i, j) == 0) {
-                    temp = candidates(i, j);
+            for (int r = 0; r < length; r++) { //row
+                if (sudoku.getNumber(r, c) == 0) {
+                    temp = candidates(r, c);
                     while (!temp.isEmpty()) {
                         int k = temp.pop();
                         if (!nums.containsKey(k)) {
                             nums.put(k, new ArrayList());
                         }
-                        nums.get(k).add(i * length + j);
+                        nums.get(k).add(r * length + c);
                     }
                 }
             }    
@@ -112,8 +112,8 @@ public class HumanSolver extends Solver {
     public boolean placeFindingBox(int length, int squareSize, Map<Integer, List<Integer>> nums) {
         boolean changed = false;
         Stack temp;
-        for (int i = 0; i < squareSize; i++) {
-            for (int j = 0; j < squareSize; j++) {
+        for (int i = 0; i < squareSize; i++) { //horizontal
+            for (int j = 0; j < squareSize; j++) { //vertical
                 nums.clear();
                 for (int k = 0; k < squareSize; k++) {
                     for (int l = 0; l < squareSize; l++) {
@@ -177,12 +177,12 @@ public class HumanSolver extends Solver {
      */
     public boolean candidateCheck() {
         boolean changed = false;
-        for (int i = 0; i < sudoku.getLength(); i++) {
-            for (int j = 0; j < sudoku.getLength(); j++) {
-                if (sudoku.getNumber(i, j) == 0) {
-                    Stack temp = candidates(i, j);
+        for (int r = 0; r < sudoku.getLength(); r++) { //row
+            for (int c = 0; c < sudoku.getLength(); c++) { //col
+                if (sudoku.getNumber(r, c) == 0) {
+                    Stack temp = candidates(r, c);
                     if (temp.size() == 1) {
-                        sudoku.setNumber(temp.pop(), i, j);
+                        sudoku.setNumber(temp.pop(), r, c);
                         changed = true;
                     }
                 }

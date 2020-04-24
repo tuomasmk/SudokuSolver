@@ -18,10 +18,10 @@ public class Solver {
     
     private void initializeCandidates() {
         candidates = new int[sudoku.getLength()][sudoku.getLength()][sudoku.getLength()];
-        for (int i = 0; i < sudoku.getLength(); i++) {
-            for (int j = 0; j < sudoku.getLength(); j++) {
+        for (int r = 0; r < sudoku.getLength(); r++) { //row
+            for (int c = 0; c < sudoku.getLength(); c++) { //col
                 for (int k = 0; k < sudoku.getLength(); k++) {
-                    candidates[i][j][k] = 0;
+                    candidates[r][c][k] = 0;
                 }
             }
         }
@@ -47,13 +47,13 @@ public class Solver {
         if (candidates == null) {
             initializeCandidates();
         }
-        for (int i = 0; i < sudoku.getLength(); i++) {
-            for (int j = 0; j < sudoku.getLength(); j++) {
-                if (sudoku.getNumber(i, j) == 0) {
-                    Stack cs = candidates(i, j);
-                    for (int k = 0; k < cs.size(); k++) {
+        for (int r = 0; r < sudoku.getLength(); r++) { //row
+            for (int c = 0; c < sudoku.getLength(); c++) { //col
+                if (sudoku.getNumber(r, c) == 0) {
+                    Stack cs = candidates(r, c);
+                    while (!cs.isEmpty()) {
                         int candidate = cs.pop();
-                        candidates[i][j][candidate - 1] = 1;
+                        candidates[r][c][candidate - 1] = 1;
                     }
                 }
             }
