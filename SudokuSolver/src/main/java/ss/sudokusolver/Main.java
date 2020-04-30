@@ -72,23 +72,32 @@ public class Main {
     
     private static void testOne() throws FileNotFoundException {
         FileReader fr = new FileReader();
-        Sudoku sudoku = fr.readCommaSeparated("sudoku16easy.csv");
-        //Sudoku sudoku = fr.readNumbersOnly(9, "sudoku.csv");
+        //Sudoku sudoku = fr.readCommaSeparated("sudoku16easy.csv");
+        Sudoku sudoku = fr.readNumbersOnly(9, "hardest.txt");
 
-        //HumanSolver solver = new HumanSolver(sudoku);
-        BacktrackSolver bts = new BacktrackSolver(sudoku);
+        HumanSolver solver = new HumanSolver(sudoku);
+        //BacktrackSolver bts = new BacktrackSolver(sudoku);
         //ReferenceGraphSolver rgs = new ReferenceGraphSolver(sudoku);
         System.out.println(sudoku);
         //rgs.solve();
-        bts.backtrack();
-        //solver.solveWbt();
+        //bts.backtrack();
+        solver.solveWbt();
         System.out.println(sudoku);
 
     }
     
+    public static void testDancingLinks() throws FileNotFoundException {
+        FileReader fr = new FileReader();
+        String filename = "sudoku16.txt";
+        Sudoku sudoku = fr.readCommaSeparated(filename);
+        DancingLinksSudoku dls = new DancingLinksSudoku(sudoku.getNumbers());
+        dls.solve();
+    }
+    
     public static void main(String[] args) throws FileNotFoundException {
         //comparePerformances();
-        testOne();
+        //testOne();
+        testDancingLinks();
     }
 
 }

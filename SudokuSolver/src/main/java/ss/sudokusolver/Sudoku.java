@@ -218,6 +218,10 @@ public class Sudoku {
     public int[] getEmpty() {
         return empty;
     }
+
+    public int[][] getNumbers() {
+        return numbers;
+    }
 }
 
 
