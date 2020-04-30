@@ -1,7 +1,6 @@
 package logics;
 
 import dataStructures.Stack;
-import java.util.ArrayList;
 import ss.sudokusolver.Sudoku;
 
 public class Solver {

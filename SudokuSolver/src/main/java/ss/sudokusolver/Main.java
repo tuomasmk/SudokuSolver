@@ -1,5 +1,6 @@
 package ss.sudokusolver;
 
+import logics.DancingLinksSolver;
 import dataStructures.Map;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
@@ -90,7 +91,7 @@ public class Main {
         FileReader fr = new FileReader();
         String filename = "sudoku16.txt";
         Sudoku sudoku = fr.readCommaSeparated(filename);
-        DancingLinksSudoku dls = new DancingLinksSudoku(sudoku.getNumbers());
+        DancingLinksSolver dls = new DancingLinksSolver(sudoku.getNumbers());
         dls.solve();
     }
     

@@ -1,48 +1,43 @@
-package ss.sudokusolver;
+package logics;
 
 import dataStructures.DLX;
 import dataStructures.DancingNode;
 import java.util.Arrays;
 import java.util.List;
+import ss.sudokusolver.Sudoku;
 
-public class DancingLinksSudoku {
+public class DancingLinksSolver extends Solver {
 
-  // Grid size
-  private static final int SIZE = 16;
-  // Box size
-  private static final int BOX_SIZE = 4;
   private static final int EMPTY_CELL = 0;
   // 4 constraints : cell, line, column, boxes
   private static final int CONSTRAINTS = 4;
-  // Values for each cells
-  private static final int MIN_VALUE = 1;
-  private static final int MAX_VALUE = SIZE;
-  // Starting index for cover matrix
-  private static final int COVER_START_INDEX = 1;
+  
 
-  private int[][] grid;
   private int[][] gridSolved;
 
-  public DancingLinksSudoku(int[][] grid) {
-    this.grid = new int[SIZE][SIZE];
-
-    for (int i = 0; i < SIZE; i++)
-      for (int j = 0; j < SIZE; j++)
-        this.grid[i][j] = grid[i][j];
-  }
-
-    DancingLinksSudoku() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public DancingLinksSolver(Sudoku sudoku) {
+        super(sudoku);
     }
+  
+  
+
+  public DancingLinksSolver(int[][] grid) {
+    super(new Sudoku(grid));
+    //this.grid = new int[sudoku.getLength()][sudoku.getLength()];
+
+//    for (int i = 0; i < sudoku.getLength(); i++)
+//      for (int j = 0; j < sudoku.getLength(); j++)
+//        this.grid[i][j] = grid[i][j];
+  }
 
   // Index in the cover matrix
   private int indexInCoverMatrix(int row, int column, int num) {
-    return (row - 1) * SIZE * SIZE + (column - 1) * SIZE + (num - 1);
+    return (row - 1) * sudoku.getLength() * sudoku.getLength() + (column - 1) * sudoku.getLength() + (num - 1);
   }
 
   // Building of an empty cover matrix
   private int[][] createCoverMatrix() {
-    int[][] coverMatrix = new int[SIZE * SIZE * MAX_VALUE][SIZE * SIZE * CONSTRAINTS];
+    int[][] coverMatrix = new int[sudoku.getLength() * sudoku.getLength() * sudoku.getLength()][sudoku.getLength() * sudoku.getLength() * CONSTRAINTS];
 
     int header = 0;
     header = createCellConstraints(coverMatrix, header);
@@ -54,11 +49,11 @@ public class DancingLinksSudoku {
   }
 
   private int createBoxConstraints(int[][] matrix, int header) {
-    for (int row = COVER_START_INDEX; row <= SIZE; row += BOX_SIZE) {
-      for (int column = COVER_START_INDEX; column <= SIZE; column += BOX_SIZE) {
-        for (int n = COVER_START_INDEX; n <= SIZE; n++, header++) {
-          for (int rowDelta = 0; rowDelta < BOX_SIZE; rowDelta++) {
-            for (int columnDelta = 0; columnDelta < BOX_SIZE; columnDelta++) {
+    for (int row = 1; row <= sudoku.getLength(); row += sudoku.getSquareSize()) {
+      for (int column = 1; column <= sudoku.getLength(); column += sudoku.getSquareSize()) {
+        for (int n = 1; n <= sudoku.getLength(); n++, header++) {
+          for (int rowDelta = 0; rowDelta < sudoku.getSquareSize(); rowDelta++) {
+            for (int columnDelta = 0; columnDelta < sudoku.getSquareSize(); columnDelta++) {
               int index = indexInCoverMatrix(row + rowDelta, column + columnDelta, n);
               matrix[index][header] = 1;
             }
@@ -71,9 +66,9 @@ public class DancingLinksSudoku {
   }
 
   private int createColumnConstraints(int[][] matrix, int header) {
-    for (int column = COVER_START_INDEX; column <= SIZE; column++) {
-      for (int n = COVER_START_INDEX; n <= SIZE; n++, header++) {
-        for (int row = COVER_START_INDEX; row <= SIZE; row++) {
+    for (int column = 1; column <= sudoku.getLength(); column++) {
+      for (int n = 1; n <= sudoku.getLength(); n++, header++) {
+        for (int row = 1; row <= sudoku.getLength(); row++) {
           int index = indexInCoverMatrix(row, column, n);
           matrix[index][header] = 1;
         }
@@ -84,9 +79,9 @@ public class DancingLinksSudoku {
   }
 
   private int createRowConstraints(int[][] matrix, int header) {
-    for (int row = COVER_START_INDEX; row <= SIZE; row++) {
-      for (int n = COVER_START_INDEX; n <= SIZE; n++, header++) {
-        for (int column = COVER_START_INDEX; column <= SIZE; column++) {
+    for (int row = 1; row <= sudoku.getLength(); row++) {
+      for (int n = 1; n <= sudoku.getLength(); n++, header++) {
+        for (int column = 1; column <= sudoku.getLength(); column++) {
           int index = indexInCoverMatrix(row, column, n);
             matrix[index][header] = 1;
         }
@@ -97,9 +92,9 @@ public class DancingLinksSudoku {
   }
 
   private int createCellConstraints(int[][] matrix, int header) {
-    for (int row = COVER_START_INDEX; row <= SIZE; row++) {
-      for (int column = COVER_START_INDEX; column <= SIZE; column++, header++) {
-        for (int n = COVER_START_INDEX; n <= SIZE; n++) {
+    for (int row = 1; row <= sudoku.getLength(); row++) {
+      for (int column = 1; column <= sudoku.getLength(); column++, header++) {
+        for (int n = 1; n <= sudoku.getLength(); n++) {
           int index = indexInCoverMatrix(row, column, n);
           matrix[index][header] = 1;
         }
@@ -110,16 +105,16 @@ public class DancingLinksSudoku {
   }
 
   // Converting DancingLinksSudoku grid as a cover matrix
-  private int[][] convertInCoverMatrix(int[][] grid) {
+  private int[][] convertInCoverMatrix() {
     int[][] coverMatrix = createCoverMatrix();
 
     // Taking into account the values already entered in DancingLinksSudoku's grid instance
-    for (int row = COVER_START_INDEX; row <= SIZE; row++) {
-      for (int column = COVER_START_INDEX; column <= SIZE; column++) {
-        int n = grid[row - 1][column - 1];
+    for (int row = 1; row <= sudoku.getLength(); row++) {
+      for (int column = 1; column <= sudoku.getLength(); column++) {
+        int n = sudoku.getNumber(row - 1, column - 1); //grid[row - 1][column - 1];
 
         if (n != EMPTY_CELL) {
-          for (int num = MIN_VALUE; num <= MAX_VALUE; num++) {
+          for (int num = 1; num <= sudoku.getLength(); num++) {
             if (num != n) {
               Arrays.fill(coverMatrix[indexInCoverMatrix(row, column, num)], 0);
             }
@@ -132,7 +127,7 @@ public class DancingLinksSudoku {
   }
 
   private int[][] convertDLXListToGrid(List<DancingNode> answer) {
-  int[][] result = new int[SIZE][SIZE];
+  int[][] result = new int[sudoku.getLength()][sudoku.getLength()];
 
   for (DancingNode n : answer) {
     DancingNode rcNode = n;
@@ -150,10 +145,10 @@ public class DancingLinksSudoku {
     // we get line and column
     int ans1 = Integer.parseInt(rcNode.column.name);
     int ans2 = Integer.parseInt(rcNode.right.column.name);
-    int r = ans1 / SIZE;
-    int c = ans1 % SIZE;
+    int r = ans1 / sudoku.getLength();
+    int c = ans1 % sudoku.getLength();
     // and the affected value
-    int num = (ans2 % SIZE) + 1;
+    int num = (ans2 % sudoku.getLength()) + 1;
     // we affect that on the result grid
     result[r][c] = num;
   }
@@ -162,7 +157,7 @@ public class DancingLinksSudoku {
 }
   
   public void solve() {
-    int[][] cover = convertInCoverMatrix(grid);
+    int[][] cover = convertInCoverMatrix();
     //printCoverMatrix(cover);
     DLX dlx = new DLX(cover);
     dlx.solve();
