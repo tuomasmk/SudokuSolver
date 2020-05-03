@@ -2,6 +2,7 @@ package LogicTests;
 
 import dataStructures.Stack;
 import logics.BacktrackSolver;
+import logics.DancingLinksSolver;
 import logics.HumanSolver;
 import logics.ReferenceGraphSolver;
 import static org.junit.Assert.assertEquals;
@@ -207,6 +208,31 @@ public class LogicsTest {
             {0, 9, 0, 0, 0, 0, 4, 0, 0}});
         HumanSolver solver = new HumanSolver(sudoku);
         solver.solveWbt();
+        assertEquals(sudoku.getNumber(0, 0), 8);
+        assertEquals(sudoku.getNumber(1, 1), 4);
+        assertEquals(sudoku.getNumber(2, 2), 5);
+        assertEquals(sudoku.getNumber(3, 3), 2);
+        assertEquals(sudoku.getNumber(4, 4), 4);
+        assertEquals(sudoku.getNumber(5, 5), 9);
+        assertEquals(sudoku.getNumber(6, 6), 3);
+        assertEquals(sudoku.getNumber(7, 7), 1);
+        assertEquals(sudoku.getNumber(8, 8), 2);
+    }
+    
+    @Test
+    public void testDancingLinksSolver() {
+        sudoku = new Sudoku(new int[][] {
+            {8, 0, 0, 0, 0, 0, 0, 0, 0},
+            {0, 0, 3, 6, 0, 0, 0, 0, 0},
+            {0, 7, 0, 0, 9, 0, 2, 0, 0},
+            {0, 5, 0, 0, 0, 7, 0, 0, 0},
+            {0, 0, 0, 0, 4, 5, 7, 0, 0},
+            {0, 0, 0, 1, 0, 0, 0, 3, 0},
+            {0, 0, 1, 0, 0, 0, 0, 6, 8},
+            {0, 0, 8, 5, 0, 0, 0, 1, 0},
+            {0, 9, 0, 0, 0, 0, 4, 0, 0}});
+        DancingLinksSolver solver = new DancingLinksSolver(sudoku);
+        solver.solve();
         assertEquals(sudoku.getNumber(0, 0), 8);
         assertEquals(sudoku.getNumber(1, 1), 4);
         assertEquals(sudoku.getNumber(2, 2), 5);

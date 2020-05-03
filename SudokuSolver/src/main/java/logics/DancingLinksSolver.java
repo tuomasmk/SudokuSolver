@@ -18,8 +18,9 @@ public class DancingLinksSolver extends Solver {
     public DancingLinksSolver(Sudoku sudoku) {
         super(sudoku);
     }
-  
-  
+
+    public DancingLinksSolver() {
+    }
 
   public DancingLinksSolver(int[][] grid) {
     super(new Sudoku(grid));
@@ -127,32 +128,35 @@ public class DancingLinksSolver extends Solver {
   }
 
   private int[][] convertDLXListToGrid(List<DancingNode> answer) {
-  int[][] result = new int[sudoku.getLength()][sudoku.getLength()];
+    
+    int[][] result = new int[sudoku.getLength()][sudoku.getLength()];
+    
+    if (answer != null) {
+        for (DancingNode n : answer) {
+          DancingNode rcNode = n;
+          int min = Integer.parseInt(rcNode.column.name);
 
-  for (DancingNode n : answer) {
-    DancingNode rcNode = n;
-    int min = Integer.parseInt(rcNode.column.name);
+          for (DancingNode tmp = n.right; tmp != n; tmp = tmp.right) {
+            int val = Integer.parseInt(tmp.column.name);
 
-    for (DancingNode tmp = n.right; tmp != n; tmp = tmp.right) {
-      int val = Integer.parseInt(tmp.column.name);
+            if (val < min) {
+              min = val;
+              rcNode = tmp;
+            }
+        }
 
-      if (val < min) {
-        min = val;
-        rcNode = tmp;
+        // we get line and column
+        int ans1 = Integer.parseInt(rcNode.column.name);
+        int ans2 = Integer.parseInt(rcNode.right.column.name);
+        int r = ans1 / sudoku.getLength();
+        int c = ans1 % sudoku.getLength();
+        // and the affected value
+        int num = (ans2 % sudoku.getLength()) + 1;
+        // we affect that on the result grid
+        result[r][c] = num;
       }
     }
 
-    // we get line and column
-    int ans1 = Integer.parseInt(rcNode.column.name);
-    int ans2 = Integer.parseInt(rcNode.right.column.name);
-    int r = ans1 / sudoku.getLength();
-    int c = ans1 % sudoku.getLength();
-    // and the affected value
-    int num = (ans2 % sudoku.getLength()) + 1;
-    // we affect that on the result grid
-    result[r][c] = num;
-  }
-  
   return result;
 }
   
@@ -161,14 +165,14 @@ public class DancingLinksSolver extends Solver {
     //printCoverMatrix(cover);
     DLX dlx = new DLX(cover);
     dlx.solve();
-    gridSolved = convertDLXListToGrid(dlx.result);
+    sudoku.setNumbers(convertDLXListToGrid(dlx.result));
 	//displaySolution();
-      for (int i = 0; i < gridSolved.length; i++) {
+    /*{  for (int i = 0; i < gridSolved.length; i++) {
           for (int j = 0; j < gridSolved[0].length; j++) {
               System.out.print(" " + gridSolved[i][j] + " ");
           }
           System.out.println("");
-      }
+      }*/
     //Sudoku sudoku = new Sudoku(cover);
     //System.out.println(sudoku);
   }

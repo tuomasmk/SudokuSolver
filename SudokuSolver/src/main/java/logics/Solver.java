@@ -14,6 +14,9 @@ public class Solver {
     public Solver(Sudoku sudoku) {
         this.sudoku = sudoku;
     }
+
+    public Solver() {
+    }
     
     private void initializeCandidates() {
         candidates = new int[sudoku.getLength()][sudoku.getLength()][sudoku.getLength()];

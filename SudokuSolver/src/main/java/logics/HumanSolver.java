@@ -12,6 +12,9 @@ public class HumanSolver extends Solver {
     public HumanSolver(Sudoku sudoku) {
         super(sudoku);
     }
+
+    public HumanSolver() {
+    }
     
     public boolean solveWbt() {
         boolean resume = true;

@@ -11,6 +11,9 @@ public class BacktrackSolver extends Solver {
     public BacktrackSolver(Sudoku sudoku) {
         super(sudoku);
     }
+
+    public BacktrackSolver() {
+    }
     
         /**
      * Backtracking logic implementation.

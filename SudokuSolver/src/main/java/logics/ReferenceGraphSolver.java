@@ -10,6 +10,9 @@ public class ReferenceGraphSolver extends Solver {
     public ReferenceGraphSolver(Sudoku sudoku) {
         super(sudoku);
     }
+
+    public ReferenceGraphSolver() {
+    }
     
     public void initializeGRM() {
         graphReferencedMatrix = new int[sudoku.getLength() * sudoku.getLength()][(sudoku.getLength() - 1) * 2 + (sudoku.getSquareSize() - 1) * (sudoku.getSquareSize() - 1)];

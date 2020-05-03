@@ -135,16 +135,19 @@ public class Sudoku {
      * @return  Textual representation of the sudoku.
      */
     String f(int a) {
+        String p4 = "012121212131212121213121212121312121212131212121214";
         String p3 = "012121213121212131212121312121214";
         String p2 = "012131214";
         String p1 = "0121213121213121214";
         String pX;
-        if (a == 4) {
-            pX = p2;
-        } else if (a == 16) {
-            pX = p3;
-        } else {
-            pX = p1;
+        switch (a) {
+            case 25: pX = p4;
+                break;
+            case 4: pX = p2;
+                break;
+            case 16: pX = p3;
+                break;
+            default: pX = p1;
         }
 
         String p = pX,                         // Both lines and rows are repeated according to this pattern.
@@ -160,11 +163,16 @@ public class Sudoku {
             r += "\n";                                              //  then append a new line
         }
                                                                 // For each number in the input
+        String alphabets = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";                                                            
         for (int i = 0; i < length; i++) {
             for (int j = 0; j < length; j++) {
                 int temp = numbers[i][j];
-                r = r.replaceFirst("x" , temp > 0 ? "" + temp : " ");                 //  replace the first 'x' with that number.
-                                                              //    (or space if zero)
+                if (a > 9) {
+                    r = r.replaceFirst("x" , temp > 0 ? "" + alphabets.charAt(temp-1) : " ");
+                } else {
+                    r = r.replaceFirst("x" , temp > 0 ? "" + temp : " ");                 //  replace the first 'x' with that number.
+                                                              //    (or space if zero)    
+                }
             }
         }
 
@@ -221,6 +229,10 @@ public class Sudoku {
 
     public int[][] getNumbers() {
         return numbers;
+    }
+
+    public void setNumbers(int[][] numbers) {
+        this.numbers = numbers;
     }
 }
 
