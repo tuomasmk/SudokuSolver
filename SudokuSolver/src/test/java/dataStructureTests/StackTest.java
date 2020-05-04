@@ -1,6 +1,6 @@
 package dataStructureTests;
 
-import dataStructures.Stack;
+import dataStructures.IntStack;
 import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.assertEquals;
@@ -10,11 +10,11 @@ import static org.junit.Assert.assertTrue;
 
 
 public class StackTest {
-    Stack stack;
+    IntStack stack;
     
     @Before
     public void setUp() {
-        stack = new Stack();
+        stack = new IntStack();
     }
     
     @Test

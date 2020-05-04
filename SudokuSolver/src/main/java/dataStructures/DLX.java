@@ -1,25 +1,21 @@
 package dataStructures;
 
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.List;
-
 
 public class DLX {
 
   private ColumnNode header;
-  private List<DancingNode> answer;
-  public List<DancingNode> result;
+  private NodeStack answer;
+  public NodeStack result;
 
   public DLX(int[][] cover) {
     header = createDLXList(cover);
-    answer = new ArrayList();
+    answer = new NodeStack();
   }
 
   private ColumnNode createDLXList(int[][] grid) {
     final int nbColumns = grid[0].length;
     ColumnNode headerNode = new ColumnNode("header");
-    List<ColumnNode> columnNodes = new ArrayList<>();
+    NodeList columnNodes = new NodeList(nbColumns);
 
     for (int i = 0; i < nbColumns; i++) {
       ColumnNode n = new ColumnNode(i + "");
@@ -71,7 +67,7 @@ public class DLX {
   if (header.right == header) {
     // End of Algorithm X
    // Result is copied in a result list
-   result = new LinkedList<>(answer);
+   result = answer.copy();
   } else {
     // we choose column c
     ColumnNode c = selectColumnNodeHeuristic();
@@ -79,7 +75,7 @@ public class DLX {
 
     for (DancingNode r = c.bottom; r != c; r = r.bottom) {
       // We add r line to partial solution
-      answer.add(r);
+      answer.push(r);
 
       // We cover columns
       for (DancingNode j = r.right; j != r; j = j.right) {
@@ -90,7 +86,7 @@ public class DLX {
       process(k + 1);
 
       // We go back
-      r = answer.remove(answer.size() - 1);
+      r = answer.pop();
       c = r.column;
 
       // We uncover columns

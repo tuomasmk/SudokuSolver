@@ -2,8 +2,8 @@ package logics;
 
 import dataStructures.DLX;
 import dataStructures.DancingNode;
+import dataStructures.NodeStack;
 import java.util.Arrays;
-import java.util.List;
 import ss.sudokusolver.Sudoku;
 
 public class DancingLinksSolver extends Solver {
@@ -13,23 +13,12 @@ public class DancingLinksSolver extends Solver {
   private static final int CONSTRAINTS = 4;
   
 
-  private int[][] gridSolved;
-
-    public DancingLinksSolver(Sudoku sudoku) {
+  public DancingLinksSolver(Sudoku sudoku) {
         super(sudoku);
     }
 
-    public DancingLinksSolver() {
+  public DancingLinksSolver() {
     }
-
-  public DancingLinksSolver(int[][] grid) {
-    super(new Sudoku(grid));
-    //this.grid = new int[sudoku.getLength()][sudoku.getLength()];
-
-//    for (int i = 0; i < sudoku.getLength(); i++)
-//      for (int j = 0; j < sudoku.getLength(); j++)
-//        this.grid[i][j] = grid[i][j];
-  }
 
   // Index in the cover matrix
   private int indexInCoverMatrix(int row, int column, int num) {
@@ -62,7 +51,6 @@ public class DancingLinksSolver extends Solver {
         }
       }
     }
-	
     return header;
   }
 
@@ -75,7 +63,6 @@ public class DancingLinksSolver extends Solver {
         }
       }
     }
-	
     return header;
   }
 
@@ -101,7 +88,6 @@ public class DancingLinksSolver extends Solver {
         }
       }
     }
-
     return header;
   }
 
@@ -127,12 +113,14 @@ public class DancingLinksSolver extends Solver {
     return coverMatrix;
   }
 
-  private int[][] convertDLXListToGrid(List<DancingNode> answer) {
+  private int[][] convertDLXListToGrid(NodeStack answer) {
     
     int[][] result = new int[sudoku.getLength()][sudoku.getLength()];
     
     if (answer != null) {
-        for (DancingNode n : answer) {
+        //for (DancingNode n : answer) {
+        while (!answer.isEmpty()) {
+          DancingNode n = answer.pop();
           DancingNode rcNode = n;
           int min = Integer.parseInt(rcNode.column.name);
 
@@ -166,14 +154,5 @@ public class DancingLinksSolver extends Solver {
     DLX dlx = new DLX(cover);
     dlx.solve();
     sudoku.setNumbers(convertDLXListToGrid(dlx.result));
-	//displaySolution();
-    /*{  for (int i = 0; i < gridSolved.length; i++) {
-          for (int j = 0; j < gridSolved[0].length; j++) {
-              System.out.print(" " + gridSolved[i][j] + " ");
-          }
-          System.out.println("");
-      }*/
-    //Sudoku sudoku = new Sudoku(cover);
-    //System.out.println(sudoku);
   }
 }

@@ -92,7 +92,7 @@ public class Main {
     private static void testBacktrack(Sudoku sudoku) {
         BacktrackSolver bts = new BacktrackSolver(sudoku);
         System.out.println(sudoku);
-        bts.backtrack();
+        bts.backtrack(0, 0);
         System.out.println(sudoku);
     }
     
@@ -121,16 +121,16 @@ public class Main {
     public static void main(String[] args) throws FileNotFoundException {
         String filename ="16x16beginner.csv";
         FileReader fr = new FileReader();
-        Sudoku sudoku = fr.readCommaSeparated(filename, ";");
-        //fr.writeToAFile("16x16beginnerA.csv", sudoku, true);
+        Sudoku sudoku = fr.readCommaSeparatedAlphabet(filename, ";");
+        //fr.writeToAFile("25x25beginnerI.csv", sudoku, false);
         //comparePerformances();
-        //testHumanSolver(sudoku);
+        testHumanSolver(sudoku);
         //testBacktrack(sudoku);
         //testReferenceGraph(sudoku);
         //testDancingLinks(sudoku);
         List<Sudoku> sudokus = new ArrayList();
         sudokus.add(sudoku);
-        comparePerformances(sudokus);
+        //comparePerformances(sudokus);
     }
 
 }

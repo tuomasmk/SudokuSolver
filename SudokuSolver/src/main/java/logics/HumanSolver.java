@@ -1,9 +1,8 @@
 package logics;
 
+import dataStructures.IntList;
 import dataStructures.Map;
-import dataStructures.Stack;
-import java.util.ArrayList;
-import java.util.List;
+import dataStructures.IntStack;
 import ss.sudokusolver.Sudoku;
 
 
@@ -51,9 +50,9 @@ public class HumanSolver extends Solver {
         return sudoku.isSolved();
     }
     
-    private boolean setValuesWithOnlyOnePlace(int length, Map<Integer, List<Integer>> nums) {
+    private boolean setValuesWithOnlyOnePlace(int length, Map<Integer, IntList> nums) {
         boolean changed = false;
-        Stack keys = nums.keys();
+        IntStack keys = nums.keys();
         while (!keys.isEmpty()) {
             int k = keys.pop();
 //        for (int k:nums.keySet()) {
@@ -68,9 +67,9 @@ public class HumanSolver extends Solver {
         return changed;
     }
     
-    public boolean placeFindingRow(int length, Map<Integer, List<Integer>> nums) {
+    public boolean placeFindingRow(int length, Map<Integer, IntList> nums) {
         boolean changed = false;
-        Stack temp;
+        IntStack temp;
         for (int r = 0; r < length; r++) { //row
             nums.clear();
             for (int c = 0; c < length; c++) { //col
@@ -79,7 +78,7 @@ public class HumanSolver extends Solver {
                     while (!temp.isEmpty()) {
                         int k = temp.pop();
                         if (!nums.containsKey(k)) {
-                            nums.put(k, new ArrayList());
+                            nums.put(k, new IntList(length));
                         }
                         nums.get(k).add(r * length + c);
                     }
@@ -90,9 +89,9 @@ public class HumanSolver extends Solver {
         return changed;
     }
     
-    public boolean placeFindingCol(int length, Map<Integer, List<Integer>> nums) {
+    public boolean placeFindingCol(int length, Map<Integer, IntList> nums) {
         boolean changed = false;
-        Stack temp;
+        IntStack temp;
         for (int c = 0; c < length; c++) { //col
             nums.clear();
             for (int r = 0; r < length; r++) { //row
@@ -101,7 +100,7 @@ public class HumanSolver extends Solver {
                     while (!temp.isEmpty()) {
                         int k = temp.pop();
                         if (!nums.containsKey(k)) {
-                            nums.put(k, new ArrayList());
+                            nums.put(k, new IntList(length));
                         }
                         nums.get(k).add(r * length + c);
                     }
@@ -112,9 +111,9 @@ public class HumanSolver extends Solver {
         return changed;
     }
     
-    public boolean placeFindingBox(int length, int squareSize, Map<Integer, List<Integer>> nums) {
+    public boolean placeFindingBox(int length, int squareSize, Map<Integer, IntList> nums) {
         boolean changed = false;
-        Stack temp;
+        IntStack temp;
         for (int i = 0; i < squareSize; i++) { //horizontal
             for (int j = 0; j < squareSize; j++) { //vertical
                 nums.clear();
@@ -127,7 +126,7 @@ public class HumanSolver extends Solver {
                             while (!temp.isEmpty()) {
                                 int m = temp.pop();
                                 if (!nums.containsKey(m)) {
-                                    nums.put(m, new ArrayList());
+                                    nums.put(m, new IntList(length));
                                 }
                                 nums.get(m).add(row * length + col);
                             }
@@ -150,7 +149,7 @@ public class HumanSolver extends Solver {
      */
     public boolean placeFinding() {
         boolean changed;
-        Map<Integer, List<Integer>> nums = new Map();
+        Map<Integer, IntList> nums = new Map();
         //Rows
         changed = placeFindingRow(sudoku.getLength(), nums);
         //Cols
@@ -183,7 +182,7 @@ public class HumanSolver extends Solver {
         for (int r = 0; r < sudoku.getLength(); r++) { //row
             for (int c = 0; c < sudoku.getLength(); c++) { //col
                 if (sudoku.getNumber(r, c) == 0) {
-                    Stack temp = candidates(r, c);
+                    IntStack temp = candidates(r, c);
                     if (temp.size() == 1) {
                         sudoku.setNumber(temp.pop(), r, c);
                         changed = true;

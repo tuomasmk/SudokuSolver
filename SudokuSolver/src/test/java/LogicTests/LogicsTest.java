@@ -1,6 +1,6 @@
 package LogicTests;
 
-import dataStructures.Stack;
+import dataStructures.IntStack;
 import logics.BacktrackSolver;
 import logics.DancingLinksSolver;
 import logics.HumanSolver;
@@ -27,7 +27,7 @@ public class LogicsTest {
     @Test
     public void candidatesAreCorrect() {
         HumanSolver solver = new HumanSolver(sudoku);
-        Stack candidates = solver.candidates(0, 1);
+        IntStack candidates = solver.candidates(0, 1);
         assertEquals(candidates.size(), 1);
         assertEquals((int) candidates.pop(), 1);
     }

@@ -56,8 +56,8 @@ public class Map<K, V> {
         return get(key) != null;
     }
     
-    public Stack keys() {
-        Stack stack = new Stack();
+    public IntStack keys() {
+        IntStack stack = new IntStack();
         Node node;
         for (int i = 0; i < nodes.length; i++) {
             node = nodes[i];

@@ -1,6 +1,3 @@
-/*
- */
-
 package logics;
 
 import ss.sudokusolver.Sudoku;
@@ -13,6 +10,32 @@ public class BacktrackSolver extends Solver {
     }
 
     public BacktrackSolver() {
+    }
+    
+    public boolean backtrack(int x, int y) {
+        if (x == sudoku.getLength()-1 && y == sudoku.getLength()) {
+            return true;
+        } else {
+            if (y == sudoku.getLength()) {
+                x++;
+                y = 0;
+            }
+            if (sudoku.getNumber(x, y) != 0) {
+                return backtrack(x, y + 1);
+            } else {
+                for (int num = 1; num <= sudoku.getLength(); num++) {
+                    if (sudoku.canPlace(num, x, y)) {
+                        sudoku.setNumber(num, x, y);
+                        if (backtrack(x, y + 1)) {
+                            return true;
+                        } else {
+                            sudoku.setNumber(0, x, y);
+                        }
+                    }
+                }
+                return false;
+            }
+        }
     }
     
         /**

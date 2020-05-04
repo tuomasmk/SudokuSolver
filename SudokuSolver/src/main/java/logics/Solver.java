@@ -1,6 +1,6 @@
 package logics;
 
-import dataStructures.Stack;
+import dataStructures.IntStack;
 import ss.sudokusolver.Sudoku;
 
 public class Solver {
@@ -35,8 +35,8 @@ public class Solver {
      * @param col
      * @return  candidates.
      */
-    public Stack candidates(int row, int col) {
-        Stack nums = new Stack();
+    public IntStack candidates(int row, int col) {
+        IntStack nums = new IntStack();
         for (int i = 1; i <= sudoku.getLength(); i++) {
             if (sudoku.canPlace(i, row, col)) {
                 nums.push(i);
@@ -52,7 +52,7 @@ public class Solver {
         for (int r = 0; r < sudoku.getLength(); r++) { //row
             for (int c = 0; c < sudoku.getLength(); c++) { //col
                 if (sudoku.getNumber(r, c) == 0) {
-                    Stack cs = candidates(r, c);
+                    IntStack cs = candidates(r, c);
                     while (!cs.isEmpty()) {
                         int candidate = cs.pop();
                         candidates[r][c][candidate - 1] = 1;

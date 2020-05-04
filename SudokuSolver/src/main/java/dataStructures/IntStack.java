@@ -1,15 +1,15 @@
 package dataStructures;
 
-public class Stack {
+public class IntStack {
     int[] array;
     int current;
 
-    public Stack(int size) {
+    public IntStack(int size) {
         array = new int[size];
         current = -1;
     }
 
-    public Stack() {
+    public IntStack() {
         this(10);
     }
     
