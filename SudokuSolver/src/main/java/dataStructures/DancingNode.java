@@ -1,51 +1,52 @@
 package dataStructures;
 
 public class DancingNode {
-  public DancingNode left, right, top, bottom;
-  public ColumnNode column;
 
-  public DancingNode() {
-    left = right = top = bottom = this;
-  }
+    public DancingNode left, right, top, bottom;
+    public ColumnNode column;
 
-  public DancingNode(ColumnNode c) {
-    this();
-    column = c;
-  }
+    public DancingNode() {
+        left = right = top = bottom = this;
+    }
 
-  public DancingNode linkDown(DancingNode node) {
-    node.bottom = bottom;
-    node.bottom.top = node;
-    node.top = this;
-    bottom = node;
-    return node;
-  }
+    public DancingNode(ColumnNode c) {
+        this();
+        column = c;
+    }
 
-  public DancingNode linkRight(DancingNode node) {
-    node.right = right;
-    node.right.left = node;
-    node.left = this;
-    right = node;
-    return node;
-  }
+    public DancingNode linkDown(DancingNode node) {
+        node.bottom = bottom;
+        node.bottom.top = node;
+        node.top = this;
+        bottom = node;
+        return node;
+    }
 
-  public void removeLeftRight() {
-    left.right = right;
-    right.left = left;
-  }
+    public DancingNode linkRight(DancingNode node) {
+        node.right = right;
+        node.right.left = node;
+        node.left = this;
+        right = node;
+        return node;
+    }
 
-  public void reinsertLeftRight() {
-    left.right = this;
-    right.left = this;
-  }
+    public void removeLeftRight() {
+        left.right = right;
+        right.left = left;
+    }
 
-  public void removeTopBottom() {
-    top.bottom = bottom;
-    bottom.top = top;
-  }
+    public void reinsertLeftRight() {
+        left.right = this;
+        right.left = this;
+    }
 
-  public void reinsertTopBottom() {
-    top.bottom = this;
-    bottom.top = this;
-  }
+    public void removeTopBottom() {
+        top.bottom = bottom;
+        bottom.top = top;
+    }
+
+    public void reinsertTopBottom() {
+        top.bottom = this;
+        bottom.top = this;
+    }
 }

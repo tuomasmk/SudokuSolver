@@ -18,7 +18,10 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.Border;
+import logics.BacktrackSolver;
 import logics.DancingLinksSolver;
+import logics.HumanSolver;
+import logics.Solver;
 import ss.sudokusolver.Sudoku;
 import utilities.FileReader;
 
@@ -52,6 +55,7 @@ final class SudokuGrid extends JPanel {
     SudokuGrid(int dimension) {
         this.grid = new JTextField[dimension][dimension];
         this.dimension = dimension;
+        this.options = new SudokuOptions();
 
         for (int y = 0; y < dimension; ++y) {
             for (int x = 0; x < dimension; ++x) {
@@ -140,40 +144,6 @@ final class SudokuGrid extends JPanel {
             FileReader fr = new FileReader();
             Sudoku sudoku = fr.readCommaSeparatedAlphabet(file.getPath(), ";");
             drawSudoku(sudoku);
-            /*
-            Scanner scanner = new Scanner(file);
-            clearAll();
-
-            int cells = dimension * dimension;
-            int y = 0;
-            int x = 0;
-
-            while (cells > 0) {
-                if (scanner.hasNext()) {
-                    String text = scanner.next();
-
-                    try {
-                        int number = Integer.parseInt(text);
-
-                        if (number > 0 && number <= dimension) {
-                            grid[y][x].setText(" " + number);
-                        }
-                    } catch (NumberFormatException ex) {
-
-                    }
-
-                    ++x;
-
-                    if (x == dimension) {
-                        x = 0;
-                        ++y;
-                    }
-                } else {
-                    break;
-                }
-
-                --cells;
-            }*/
         } catch (FileNotFoundException ex) {
 
         }
@@ -260,24 +230,41 @@ final class SudokuGrid extends JPanel {
         }
         return sudoku;
     }
+    
+    Solver getSolver() {
+        if (options == null) {
+            return new DancingLinksSolver();
+        }
+        switch (options.solver) {
+            case HUMAN:
+                return new HumanSolver();
+            case BT:
+                return new BacktrackSolver();
+            case DL:
+                return new DancingLinksSolver();
+                
+        }
+        return new DancingLinksSolver();
+    }       
 
     void solve() {
         Sudoku sudoku = sudokuFromGrid();
-
+        Solver solver = getSolver(); //DancingLinksSolver dls = new DancingLinksSolver(sudoku);
+        solver.setSudoku(sudoku);
         try {
-            DancingLinksSolver dls = new DancingLinksSolver(sudoku);
-            dls.solve();
-            String skip = dimension < 10 ? " " : "";
+            Thread t = new Thread() {
+                @Override
+                public void run() {
+                    solver.solve();
+                    drawSudoku(sudoku); 
 
-            for (int y = 0; y < dimension; ++y) {
-                for (int x = 0; x < dimension; ++x) {
-                    grid[y][x].setText(skip + sudoku.getNumber(x, y));
+                    if (!sudoku.isSolved()) {
+                        throw new RuntimeException("Could not solve sudoku,"
+                                                    + "try another algorithm.");
+                    }
                 }
-            }  
-
-            if (!sudoku.isSolved()) {
-                throw new RuntimeException("Something gone wrong.");
-            }
+            };
+            t.run();
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(this, 
                                           ex.getMessage(),

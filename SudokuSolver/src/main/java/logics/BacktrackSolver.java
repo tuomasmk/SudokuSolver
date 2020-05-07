@@ -12,15 +12,19 @@ public class BacktrackSolver extends Solver {
     public BacktrackSolver() {
     }
     
+    public boolean solve() {
+        return backtrack(0, 0);
+    }
+    
     public boolean backtrack(int x, int y) {
-        if (x == sudoku.getLength()-1 && y == sudoku.getLength()) {
+        if (x == sudoku.getLength() - 1 && y == sudoku.getLength()) {
             return true;
         } else {
             if (y == sudoku.getLength()) {
                 x++;
                 y = 0;
             }
-            if (sudoku.getNumber(x, y) != 0) {
+            if (sudoku.getNumber(x, y) != EMPTY_CELL) {
                 return backtrack(x, y + 1);
             } else {
                 for (int num = 1; num <= sudoku.getLength(); num++) {
@@ -29,7 +33,7 @@ public class BacktrackSolver extends Solver {
                         if (backtrack(x, y + 1)) {
                             return true;
                         } else {
-                            sudoku.setNumber(0, x, y);
+                            sudoku.setNumber(EMPTY_CELL, x, y);
                         }
                     }
                 }
@@ -71,7 +75,13 @@ public class BacktrackSolver extends Solver {
         return backtrackWEmpty(0);
     }
     
-    public boolean backtrackWEmpty(int current) {
+    /**
+     * Backtrack algorithm that iterates through
+     * an array of empty cells.
+     * @param current
+     * @return 
+     */
+    private boolean backtrackWEmpty(int current) {
         if (current >= sudoku.getEmpty().length) {
             return true;
         }
@@ -84,7 +94,7 @@ public class BacktrackSolver extends Solver {
                 if (backtrackWEmpty(current + 1)) {
                     return true;
                 } else {
-                    sudoku.setNumber(0, row, col);
+                    sudoku.setNumber(EMPTY_CELL, row, col);
                 }
             }
         }
@@ -106,17 +116,17 @@ public class BacktrackSolver extends Solver {
      * @return  true if the sudoku is solved
      *          false if the sudoku cannot be solved.
      */
-    public boolean backtractWithCandidates() {
+    private boolean backtractWithCandidates() {
         int[] cell = sudoku.nextFreeCell();
         if (cell[0] != -1) {
             for (int k = 0; k < sudoku.getLength(); k++) {
-                if (getCandidates()[cell[0]][cell[1]][k] != 0) {
+                if (getCandidates()[cell[0]][cell[1]][k] != EMPTY_CELL) {
                     if (sudoku.canPlace(k + 1, cell[0], cell[1])) {
                         sudoku.setNumber(k + 1, cell[0], cell[1]);
                         if (backtractWithCandidates()) {
                             return true;
                         } else {
-                            sudoku.setNumber(0, cell[0], cell[1]);
+                            sudoku.setNumber(EMPTY_CELL, cell[0], cell[1]);
                         }
                     }
                 }

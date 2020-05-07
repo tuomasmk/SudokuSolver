@@ -24,7 +24,7 @@ public class SudokuOptionsFrame extends javax.swing.JFrame {
     public SudokuOptionsFrame(SudokuGrid grid) {
         this.grid = grid;
         initComponents();
-        options = new SudokuOptions();
+        options = grid.getOptions();
     }
 
     public SudokuOptions getOptions() {
@@ -40,11 +40,12 @@ public class SudokuOptionsFrame extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        bgSOLVER_GROUP = new javax.swing.ButtonGroup();
         jPanel1 = new javax.swing.JPanel();
-        cbDANCINGLINKS = new javax.swing.JCheckBox();
-        cbBACKTRACK = new javax.swing.JCheckBox();
-        cbHUMAN = new javax.swing.JCheckBox();
         lbSOLVER = new javax.swing.JLabel();
+        rbHUMAN = new javax.swing.JRadioButton();
+        rbDANCING_LINKS = new javax.swing.JRadioButton();
+        rbBACKTRACK = new javax.swing.JRadioButton();
         jPanel2 = new javax.swing.JPanel();
         lbIMPORT_TYPE = new javax.swing.JLabel();
         rbNUMBERS = new javax.swing.JRadioButton();
@@ -59,16 +60,16 @@ public class SudokuOptionsFrame extends javax.swing.JFrame {
         setAlwaysOnTop(true);
         setName("frOPTIONS"); // NOI18N
 
-        cbDANCINGLINKS.setText("Dancing Links");
-        cbDANCINGLINKS.setName("cbDANCINGLINKS"); // NOI18N
-
-        cbBACKTRACK.setText("Backtrack");
-        cbBACKTRACK.setName("cbBACKTRACK"); // NOI18N
-
-        cbHUMAN.setText("Human");
-        cbHUMAN.setName("cbHUMAN"); // NOI18N
-
         lbSOLVER.setText("Solver");
+
+        bgSOLVER_GROUP.add(rbHUMAN);
+        rbHUMAN.setText("Human (fastest, cannot solve all sudokus)");
+
+        bgSOLVER_GROUP.add(rbDANCING_LINKS);
+        rbDANCING_LINKS.setText("Dancing Links (moderate, can solve most sudokus)");
+
+        bgSOLVER_GROUP.add(rbBACKTRACK);
+        rbBACKTRACK.setText("Backtrack (slowest, can solve all sudokus)");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -77,15 +78,10 @@ public class SudokuOptionsFrame extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(lbSOLVER)
-                            .addComponent(cbHUMAN))
-                        .addGap(30, 30, 30))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(cbBACKTRACK)
-                        .addGap(18, 18, 18))
-                    .addComponent(cbDANCINGLINKS))
+                    .addComponent(rbBACKTRACK)
+                    .addComponent(rbDANCING_LINKS)
+                    .addComponent(rbHUMAN)
+                    .addComponent(lbSOLVER))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -94,12 +90,12 @@ public class SudokuOptionsFrame extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(lbSOLVER)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(cbHUMAN)
+                .addComponent(rbDANCING_LINKS)
+                .addGap(3, 3, 3)
+                .addComponent(rbHUMAN)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(cbBACKTRACK)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(cbDANCINGLINKS)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(rbBACKTRACK)
+                .addContainerGap(22, Short.MAX_VALUE))
         );
 
         lbIMPORT_TYPE.setText("Import Type");
@@ -199,7 +195,7 @@ public class SudokuOptionsFrame extends javax.swing.JFrame {
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 37, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 22, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btOK)
                     .addComponent(btCANCEL))
@@ -211,13 +207,13 @@ public class SudokuOptionsFrame extends javax.swing.JFrame {
 
     private void btOKActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btOKActionPerformed
         // TODO add your handling code here:
-        /*if (cbHUMAN.isSelected()) {
+        if (rbHUMAN.isSelected()) {
             options.solver = SudokuOptions.SolverType.HUMAN;
-        } else if  (cbDANCINGLINKS.isSelected()) {
+        } else if  (rbDANCING_LINKS.isSelected()) {
             options.solver = SudokuOptions.SolverType.DL;
         } else {
             options.solver = SudokuOptions.SolverType.BT;
-        }*/
+        }
         if (rbNUMBERS.isSelected()) {
             options.coding = SudokuOptions.Coding.NUMBERS;
         } else {
@@ -275,11 +271,9 @@ public class SudokuOptionsFrame extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.ButtonGroup bgSOLVER_GROUP;
     private javax.swing.JButton btCANCEL;
     private javax.swing.JButton btOK;
-    private javax.swing.JCheckBox cbBACKTRACK;
-    private javax.swing.JCheckBox cbDANCINGLINKS;
-    private javax.swing.JCheckBox cbHUMAN;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JLabel lbCHARACTERS;
@@ -287,6 +281,9 @@ public class SudokuOptionsFrame extends javax.swing.JFrame {
     private javax.swing.JLabel lbSEPARATOR;
     private javax.swing.JLabel lbSOLVER;
     private javax.swing.JRadioButton rbALPHABET;
+    private javax.swing.JRadioButton rbBACKTRACK;
+    private javax.swing.JRadioButton rbDANCING_LINKS;
+    private javax.swing.JRadioButton rbHUMAN;
     private javax.swing.JRadioButton rbNUMBERS;
     private javax.swing.JTextField tfCHARACTERS;
     private javax.swing.JTextField tfSEPARATOR;

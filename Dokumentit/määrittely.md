@@ -14,11 +14,9 @@ Tiedostosta luetaan sudoku kaksiulotteiseen taulukkoon.
 ## 9x9 sudoku
 Algoritmille, joka kokeilee numeroita järjestyksessä (1, 2, 3, ...), haastavin ratkaistava sudoku olisi sellainen, jossa ratkaistavat numerot olisivat käänteisessä järjestyksessä (9, 8, 7, ...). Tällöin pitäisi käydä läpi valtava määrä vääriä ratkaisuja, ennen kuin ensimmäisessä ratkaistavassa ruudussa päästään oikeaan numeroon. Ratkaisun vaikeuteen vaikuttaa myös se, kuinka pitkälle sudokua pitää ratkoa, ennen kuin virhe ensimmäisessä ruudussa havaitaan.
 
-Mahdollisia ratkaisuja sudokulle on noin 6,671 * 10^21 (Felgenhauer 2005). Tavallisessa 9x9 sudokussa täytyy olla vähintään 17 ruutua, joissa on vihje McGuire 2012. Tämä jättää 81 - 17 = 64 ratkaistavaa ruutua. Ratkaistavien ruutujen määrä ei kuitenkaan suoraan korreloi tehtään vaativuuden kanssa, vaan enemmän vihjeitä sisältävä sudoku voi olla algoritmille haastavampi ratkaistava, jos ratkaistavat numerot ovat järjestyneet yllä kuvatulla tavalla.
+Mahdollisia ratkaisuja sudokulle on noin 6,671 * 10\exp21 (Felgenhauer 2005). Tavallisessa 9x9 sudokussa täytyy olla vähintään 17 ruutua, joissa on vihje McGuire 2012. Tämä jättää 81 - 17 = 64 ratkaistavaa ruutua. Ratkaistavien ruutujen määrä ei kuitenkaan suoraan korreloi tehtään vaativuuden kanssa, vaan enemmän vihjeitä sisältävä sudoku voi olla algoritmille haastavampi ratkaistava, jos ratkaistavat numerot ovat järjestyneet yllä kuvatulla tavalla.
 
-Pahimmassa tapauksessa kaikki ratkaistavat ruudut pitäisi käydä läpi kaikilla arvoilla 64^9 ≈ 18*10^15, mutta tämä ei ole sudokun sääntöjen mukaista. Toinen oletus voisi olla, että kuhunkin ruutuun kokeiltaisiin puolet mahdollisista numeroista eli 64^5 ≈ 10^9. 
-
-Aikavaativuutta voisikin haarukoida ratkaistavien ruutujen (r) ja käytettävien numeroiden (n) avulla O(r^(n/2)). Kuten kohta nähdään, sudokun ruutujen määrä on käytettyjen numeroiden määrän neliö. Tästä seuraa että ratkaistavia ruutuja on korkeintaan n^2. Ja edelleen sijoittamalla r = n^2 saadaan (n^2)^(n/2) = n^n.
+Pahimmassa tapauksessa jokaiseen ruutuun kokeiltaisiin jokaista mahdollista arvoa eli vaihtoehtoja olsi 9\exp(9 * 9). Yllä esitetyn perusteella 17 ruudussa on vähintään arvo, jolloin pahimman tapauksen aikavaativuus olisi 9\exp64.
 
 ## Aika- ja tilavaativuus
 
@@ -32,11 +30,11 @@ Neliön koko | Numeroiden määrä | Sudokun koko
 
 Käytettyjen numeroiden määrä on neliön sivun pituuden neliö ja sudokun ruutujen määrä on neliön sivun pituuden neljäs potenssi. Kun syötteen arvona käytetään käytettävien numeroiden määrää ja kyseessä on neliönmuotoinen sudoku:
 
-Aikavaativuus on noin O(n^n).
+Aikavaativuus on O(n\exp(n * n)).
 
-Sudokun tallettaminen vaatii sudokun kokoisen taulukon verran tilaa. Tarvittavat muutokset tehdään suoraan taulukkoon, joten aputietorakenteita ei tarvita tai ne ovat vain yksittäisiä muuttujia. 
+Sudokun tallettaminen vaatii sudokun kokoisen taulukon verran tilaa.
 
-Tilavaativuus on O(n^2).
+Tilavaativuus on O(n\exp2).
 
 ## Lähteet
 Felgenhauer 2005. Felgenhauer, B., Jarvis, F. Enumerating possible sudoku grids. 2005

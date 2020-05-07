@@ -21,8 +21,8 @@ public class SudokuOptions {
 
     public SudokuOptions() {
         solver = SolverType.DL;
-        coding = Coding.NUMBERS;
-        separator = "";
+        coding = Coding.ALPHABET;
+        separator = ";";
         chars = "";
     }
     

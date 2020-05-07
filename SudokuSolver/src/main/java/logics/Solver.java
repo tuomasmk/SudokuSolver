@@ -3,9 +3,13 @@ package logics;
 import dataStructures.IntStack;
 import ss.sudokusolver.Sudoku;
 
-public class Solver {
+public abstract class Solver {
     Sudoku sudoku;
     int[][][] candidates;
+    
+    static final int EMPTY_CELL = 0;
+    
+    abstract public boolean solve();
 
     /**
      *Solver containing logic to solve sudoku.

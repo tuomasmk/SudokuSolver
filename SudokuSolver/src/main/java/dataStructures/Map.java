@@ -62,7 +62,7 @@ public class Map<K, V> {
         for (int i = 0; i < nodes.length; i++) {
             node = nodes[i];
             while (node != null) {
-                stack.push((Integer)node.key);
+                stack.push((Integer) node.key);
                 node = node.next;
             }
         }

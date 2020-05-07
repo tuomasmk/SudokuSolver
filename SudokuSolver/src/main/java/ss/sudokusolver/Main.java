@@ -148,7 +148,7 @@ public class Main {
             start = System.currentTimeMillis();
             for (int i = 0; i < times; i++) {
                 solver.setSudoku(sudoku.copy(sudoku));
-                solver.solveWbt();
+                solver.solveWdl();
             }
             end = System.currentTimeMillis();
             System.out.println("" + times + " sudokus solved in " + (end - start) + " ms with human solver");
@@ -229,18 +229,19 @@ public class Main {
         FileReader fr = new FileReader();
         List<String> filenames = new ArrayList();
         filenames.add("Alphabet sudokus/9x9beginnerA.csv");
-        //filenames.add("Alphabet sudokus/16x16beginnerA.csv");
-        //filenames.add("Alphabet sudokus/25x25beginnerA.csv");
+        filenames.add("Alphabet sudokus/16x16beginnerA.csv");
+        filenames.add("Alphabet sudokus/25x25beginnerA.csv");
         filenames.add("Alphabet sudokus/9x9confirmedA.csv");
-        //filenames.add("Alphabet sudokus/16x16confirmedA.csv");
-        //filenames.add("Alphabet sudokus/25x25advancedA.csv");
+        filenames.add("Alphabet sudokus/16x16confirmedA.csv");
+        filenames.add("Alphabet sudokus/25x25advancedA.csv");
+        //filenames.add("Alphabet sudokus/25x25expertA.csv");
         for (String file : filenames) {
             sudokus.add(fr.readCommaSeparatedAlphabet(file, ";"));
         }
-        //humanPerformance(sudokus, 100);
+        humanPerformance(sudokus, 100);
         //dancingLinksPerformance(sudokus, 100);
-        backtrackPerformance(sudokus, 100);
-        referenceGraphPerformance(sudokus, 100);
+        //backtrackPerformance(sudokus, 100);
+        //referenceGraphPerformance(sudokus, 100);
     }
     
     public static void main(String[] args) throws FileNotFoundException {

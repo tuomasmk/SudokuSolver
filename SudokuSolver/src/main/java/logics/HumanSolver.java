@@ -5,7 +5,6 @@ import dataStructures.Map;
 import dataStructures.IntStack;
 import ss.sudokusolver.Sudoku;
 
-
 public class HumanSolver extends Solver {
 
     public HumanSolver(Sudoku sudoku) {
@@ -14,7 +13,7 @@ public class HumanSolver extends Solver {
 
     public HumanSolver() {
     }
-    
+
     public boolean solveWbt() {
         boolean resume = true;
         while (resume) {
@@ -26,11 +25,24 @@ public class HumanSolver extends Solver {
         }
         return sudoku.isSolved();
     }
+
+    public boolean solveWdl() {
+        boolean resume = true;
+        while (resume) {
+            resume = candidateCheck() || placeFinding();
+        }
+        if (!sudoku.isSolved()) {
+            DancingLinksSolver dls = new DancingLinksSolver(sudoku);
+            dls.solve();
+        }
+        return sudoku.isSolved();
+    }
     
-        /**
+    /**
      * Logic that uses human like methods to solve a sudoku.
-     * @return  true if sudoku is solved
-     *          false if the sudoku cannot be solved with this method.
+     *
+     * @return true if sudoku is solved false if the sudoku cannot be solved
+     * with this method.
      */
     public boolean solve() {
         boolean resume = true;
@@ -39,17 +51,25 @@ public class HumanSolver extends Solver {
         }
         return sudoku.isSolved();
     }
-    
+
     /**
      * Solves sudoku using place-finding method repeatedly.
-     * @return true if sudoku is solved
-     *          false if the sudoku cannot be solved with this method.
+     *
+     * @return true if sudoku is solved false if the sudoku cannot be solved
+     * with this method.
      */
     public boolean fillUsingPlaceFinding() {
         while (placeFinding());
         return sudoku.isSolved();
     }
-    
+
+    /**
+     * Inserts values with only one possible place.
+     *
+     * @param length size of sudoku
+     * @param nums numbers and possible places
+     * @return
+     */
     private boolean setValuesWithOnlyOnePlace(int length, Map<Integer, IntList> nums) {
         boolean changed = false;
         IntStack keys = nums.keys();
@@ -66,54 +86,54 @@ public class HumanSolver extends Solver {
         }
         return changed;
     }
-    
-    public boolean placeFindingRow(int length, Map<Integer, IntList> nums) {
+
+    /**
+     * Add possible slots to the map
+     *
+     * @param length size of sudoku.
+     * @param row
+     * @param col
+     * @param nums numbers and possible places
+     */
+    private void populateMap(int length, int row, int col, Map<Integer, IntList> nums) {
+        if (sudoku.getNumber(row, col) == EMPTY_CELL) {
+            IntStack temp = candidates(row, col);
+            while (!temp.isEmpty()) {
+                int k = temp.pop();
+                if (!nums.containsKey(k)) {
+                    nums.put(k, new IntList(length));
+                }
+                nums.get(k).add(row * length + col);
+            }
+        }
+    }
+
+    private boolean placeFindingRow(int length, Map<Integer, IntList> nums) {
         boolean changed = false;
-        IntStack temp;
         for (int r = 0; r < length; r++) { //row
             nums.clear();
             for (int c = 0; c < length; c++) { //col
-                if (sudoku.getNumber(r, c) == 0) {
-                    temp = candidates(r, c);
-                    while (!temp.isEmpty()) {
-                        int k = temp.pop();
-                        if (!nums.containsKey(k)) {
-                            nums.put(k, new IntList(length));
-                        }
-                        nums.get(k).add(r * length + c);
-                    }
-                }
+                populateMap(length, r, c, nums);
             }
             changed = setValuesWithOnlyOnePlace(length, nums) || changed;
         }
         return changed;
     }
-    
-    public boolean placeFindingCol(int length, Map<Integer, IntList> nums) {
+
+    private boolean placeFindingCol(int length, Map<Integer, IntList> nums) {
         boolean changed = false;
-        IntStack temp;
         for (int c = 0; c < length; c++) { //col
             nums.clear();
             for (int r = 0; r < length; r++) { //row
-                if (sudoku.getNumber(r, c) == 0) {
-                    temp = candidates(r, c);
-                    while (!temp.isEmpty()) {
-                        int k = temp.pop();
-                        if (!nums.containsKey(k)) {
-                            nums.put(k, new IntList(length));
-                        }
-                        nums.get(k).add(r * length + c);
-                    }
-                }
-            }    
+                populateMap(length, r, c, nums);
+            }
             changed = setValuesWithOnlyOnePlace(length, nums) || changed;
         }
         return changed;
     }
-    
-    public boolean placeFindingBox(int length, int squareSize, Map<Integer, IntList> nums) {
+
+    private boolean placeFindingBox(int length, int squareSize, Map<Integer, IntList> nums) {
         boolean changed = false;
-        IntStack temp;
         for (int i = 0; i < squareSize; i++) { //horizontal
             for (int j = 0; j < squareSize; j++) { //vertical
                 nums.clear();
@@ -121,16 +141,7 @@ public class HumanSolver extends Solver {
                     for (int l = 0; l < squareSize; l++) {
                         int row = i * squareSize + k;
                         int col = j * squareSize + l;
-                        if (sudoku.getNumber(row, col) == 0) {
-                            temp = candidates(row, col);
-                            while (!temp.isEmpty()) {
-                                int m = temp.pop();
-                                if (!nums.containsKey(m)) {
-                                    nums.put(m, new IntList(length));
-                                }
-                                nums.get(m).add(row * length + col);
-                            }
-                        }
+                        populateMap(length, row, col, nums);
                     }
                 }
                 changed = setValuesWithOnlyOnePlace(length, nums) || changed;
@@ -138,14 +149,14 @@ public class HumanSolver extends Solver {
         }
         return changed;
     }
-    
+
     /**
-     * Place-finding logic implementation.
-     * Finds all candidates (numbers that may be entered in a cell)
-     * in a row, column or box. Inserts numbers with only one available cell.
-     * @return  true if a change has been made
-     *          false if no change has been made
-     *          i.e. sudoku cannot be solved with this method.
+     * Place-finding logic implementation. Finds all candidates (numbers that
+     * may be entered in a cell) in a row, column or box. Inserts numbers with
+     * only one available cell.
+     *
+     * @return true if a change has been made false if no change has been made
+     * i.e. sudoku cannot be solved with this method.
      */
     public boolean placeFinding() {
         boolean changed;
@@ -158,30 +169,31 @@ public class HumanSolver extends Solver {
         changed = placeFindingBox(sudoku.getLength(), sudoku.getSquareSize(), nums) || changed;
         return changed;
     }
-    
+
     /**
      * Solves sudoku with candidate-check method.
-     * @return  true if sudoku was solved
-     *          false if sudoku cannot be solved with this method.
+     *
+     * @return true if sudoku was solved false if sudoku cannot be solved with
+     * this method.
      */
     public boolean fillUsingCandidateCheck() {
         while (candidateCheck());
         return sudoku.isSolved();
     }
-    
+
     /**
-     * Candidate-check logic implementation.
-     * Finds all candidates (numbers that may be entered in a cell).
-     * If only candidate is present, it is inserted in that cell.
-     * @return  true if a change has been made
-     *          false if no change has been made
-     *          i.e. sudoku cannot be solved with this method.
+     * Candidate-check logic implementation. Finds all candidates (numbers that
+     * may be entered in a cell). If only candidate is present, it is inserted
+     * in that cell.
+     *
+     * @return true if a change has been made false if no change has been made
+     * i.e. sudoku cannot be solved with this method.
      */
     public boolean candidateCheck() {
         boolean changed = false;
         for (int r = 0; r < sudoku.getLength(); r++) { //row
             for (int c = 0; c < sudoku.getLength(); c++) { //col
-                if (sudoku.getNumber(r, c) == 0) {
+                if (sudoku.getNumber(r, c) == EMPTY_CELL) {
                     IntStack temp = candidates(r, c);
                     if (temp.size() == 1) {
                         sudoku.setNumber(temp.pop(), r, c);
@@ -192,5 +204,4 @@ public class HumanSolver extends Solver {
         }
         return changed;
     }
-
 }
