@@ -10,12 +10,12 @@ Algoritmien nopeuksia verailtiin ratkaisemalla eri kokoisia ja vaikeuksisia sudo
 
 Algoritmi       | Aika (ms) (9x9) | Aika (ms) (16x16) | Aika (ms) (25x25)
 --------------- | --------------- | ----------------- | -----------------------
-Ihmis + dl      | 6*10^-2      | 2                 | -
-Ihmis + bt      | 5*10^-2      | 2                 | -
-Backtrack       | 5*10^-2      | 7,1*10^6          | -
-+vaihtoehto     | 8*10^-2      | 3,8*10^6          | -
-Reference graph | 9*10^-2      | 9,8*10^6          | -
-Dancing Links   | 5*10^-2      | 14                | 8,5*10^4
+Ihmis + dl      | 6 * 10^-2      | 2                 | -
+Ihmis + bt      | 5 * 10^-2      | 2                 | -
+Backtrack       | 5 * 10^-2      | 7 * 10^6          | -
++vaihtoehto     | 8 * 10^-2      | 4 * 10^6          | -
+Reference graph | 9 * 10^-2      | 10 * 10^6          | -
+Dancing Links   | 5 * 10^-2      | 14                | 8,5 * 10^4
 
 Main luokka sisältää testaukseen soveltuvia metodeja. Tällöin ohjelmaa pitää ajaa kehitysympäristöstä.
 

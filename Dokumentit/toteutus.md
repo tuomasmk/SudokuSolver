@@ -40,11 +40,11 @@ Algoritmi on optimoitu versio backtrack-algoritmista. Algoritmissa pidetään ki
 
 ## Aika- ja tilavaativuudet
 
-              | aikavaativuus  | tilavaativuus
-------------- | -------------- | -------------
-backtrack     | n^(n * n)   | n^2
-dancing links | n^(n * n)   | n^5
-human         | n^5         | n^2
+|               | aikavaativuus  | tilavaativuus |
+| ------------- | -------------- | ------------- |
+| backtrack     | n^(n * n)      | n^2           |
+| dancing links | n^(n * n)      | n^5           |
+| human         | n^5            | n^2           |
 
 Käytännössä Dancing links on vain vähän hitaampi kuin ihmisratkaisija ja ihmisratkaisijan aikavaativuus on pienempi kuin yllä esitetty.
 
