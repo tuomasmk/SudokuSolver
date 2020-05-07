@@ -2,9 +2,24 @@
 
 Testaus on suoritettu yksikkötestaamalla ja vertailemalla algoritmien nopeuksia.
 
-Sudokunratkaisualgoritmien nopeuksia on vertailtu [toteutusdokumentissa](https://github.com/tuomasmk/SudokuSolver/blob/master/Dokumentit/toteutus.md).
+## Algoritmien nopeuksien vertailua
 
-## Käyttöohjeita
+Algoritmien nopeuksia verailtiin ratkaisemalla eri kokoisia ja vaikeuksisia sudokuita. Nopeudet on saatu ottamalla keskiarvo useammasta ratkaisusta. Pienemmillä sudokuilla 9x9 ja 16x16 (paitsi backtrack) on käytetty sadan ratkaisun keskiarvoa. Suuremmilla syötteillä tulos on yhden (backtrack) tai muutaman suorituksen (dancing links) keskiarvo. Dancing links algoritmilla yritettiin ratkaista 36x36 sudokua, mutta se ei ratkennut järjellisessä ajassa.
+
+![Performance graph](https://github.com/tuomasmk/SudokuSolver/blob/master/Dokumentit/solver_performances.png "Performance graph")
+
+Algoritmi       | Aika (ms) (9x9) | Aika (ms) (16x16) | Aika (ms) (25x25)
+--------------- | --------------- | ----------------- | -----------------------
+Ihmis + dl      | 6*10^-2      | 2                 | -
+Ihmis + bt      | 5*10^-2      | 2                 | -
+Backtrack       | 5*10^-2      | 7,1*10^6          | -
++vaihtoehto     | 8*10^-2      | 3,8*10^6          | -
+Reference graph | 9*10^-2      | 9,8*10^6          | -
+Dancing Links   | 5*10^-2      | 14                | 8,5*10^4
+
+Main luokka sisältää testaukseen soveltuvia metodeja. Tällöin ohjelmaa pitää ajaa kehitysympäristöstä.
+
+## Testaus kehitysympäristössä
 
 Apuluokka FileReader lukee sudokuja erimuotoisista tiedostoista. Tuettuja tiedostomuotoja ovat erilaiset tekstitiedostot, joihin sudoku on talletettu:
 * pilkulla erotettuna riveittäin (nollalla tai ilman ks. esimerkit)

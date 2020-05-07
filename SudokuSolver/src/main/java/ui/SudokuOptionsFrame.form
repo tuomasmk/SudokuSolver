@@ -31,10 +31,9 @@
           <Group type="102" alignment="1" attributes="0">
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="1" attributes="0">
-                  <Component id="jPanel2" max="32767" attributes="0"/>
                   <Group type="102" alignment="0" attributes="0">
                       <Component id="btOK" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace max="32767" attributes="0"/>
+                      <EmptySpace pref="171" max="32767" attributes="0"/>
                       <Component id="btCANCEL" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <Component id="jPanel1" alignment="0" max="32767" attributes="0"/>
@@ -48,9 +47,7 @@
           <Group type="102" alignment="0" attributes="0">
               <EmptySpace max="-2" attributes="0"/>
               <Component id="jPanel1" min="-2" max="-2" attributes="0"/>
-              <EmptySpace max="-2" attributes="0"/>
-              <Component id="jPanel2" min="-2" max="-2" attributes="0"/>
-              <EmptySpace pref="22" max="32767" attributes="0"/>
+              <EmptySpace max="32767" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="btOK" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="btCANCEL" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -89,7 +86,7 @@
                   <Component id="rbHUMAN" min="-2" max="-2" attributes="0"/>
                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
                   <Component id="rbBACKTRACK" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace pref="22" max="32767" attributes="0"/>
+                  <EmptySpace max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -113,7 +110,7 @@
             <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
               <ComponentRef name="bgSOLVER_GROUP"/>
             </Property>
-            <Property name="text" type="java.lang.String" value="Dancing Links (moderate, can solve most sudokus)"/>
+            <Property name="text" type="java.lang.String" value="Dancing Links (moderate)"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JRadioButton" name="rbBACKTRACK">
@@ -122,101 +119,6 @@
               <ComponentRef name="bgSOLVER_GROUP"/>
             </Property>
             <Property name="text" type="java.lang.String" value="Backtrack (slowest, can solve all sudokus)"/>
-          </Properties>
-        </Component>
-      </SubComponents>
-    </Container>
-    <Container class="javax.swing.JPanel" name="jPanel2">
-
-      <Layout>
-        <DimensionLayout dim="0">
-          <Group type="103" groupAlignment="0" attributes="0">
-              <Group type="102" attributes="0">
-                  <EmptySpace max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="0" attributes="0">
-                      <Group type="103" alignment="1" groupAlignment="0" attributes="0">
-                          <Component id="rbNUMBERS" alignment="0" min="-2" max="-2" attributes="0"/>
-                          <Component id="lbIMPORT_TYPE" alignment="0" min="-2" max="-2" attributes="0"/>
-                      </Group>
-                      <Component id="rbALPHABET" alignment="1" min="-2" max="-2" attributes="0"/>
-                  </Group>
-                  <EmptySpace type="separate" max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="0" attributes="0">
-                      <Component id="lbCHARACTERS" alignment="0" min="-2" max="-2" attributes="0"/>
-                      <Component id="lbSEPARATOR" alignment="0" min="-2" max="-2" attributes="0"/>
-                  </Group>
-                  <EmptySpace type="separate" max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="0" attributes="0">
-                      <Group type="102" attributes="0">
-                          <Component id="tfSEPARATOR" min="-2" pref="32" max="-2" attributes="0"/>
-                          <EmptySpace min="0" pref="172" max="32767" attributes="0"/>
-                      </Group>
-                      <Component id="tfCHARACTERS" max="32767" attributes="0"/>
-                  </Group>
-                  <EmptySpace max="-2" attributes="0"/>
-              </Group>
-          </Group>
-        </DimensionLayout>
-        <DimensionLayout dim="1">
-          <Group type="103" groupAlignment="0" attributes="0">
-              <Group type="102" alignment="0" attributes="0">
-                  <EmptySpace max="-2" attributes="0"/>
-                  <Component id="lbIMPORT_TYPE" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="rbNUMBERS" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="lbSEPARATOR" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="tfSEPARATOR" alignment="3" min="-2" max="-2" attributes="0"/>
-                  </Group>
-                  <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="rbALPHABET" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="lbCHARACTERS" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="tfCHARACTERS" alignment="3" min="-2" max="-2" attributes="0"/>
-                  </Group>
-                  <EmptySpace max="32767" attributes="0"/>
-              </Group>
-          </Group>
-        </DimensionLayout>
-      </Layout>
-      <SubComponents>
-        <Component class="javax.swing.JLabel" name="lbIMPORT_TYPE">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="Import Type"/>
-          </Properties>
-        </Component>
-        <Component class="javax.swing.JRadioButton" name="rbNUMBERS">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="Numbers"/>
-            <Property name="name" type="java.lang.String" value="rbNUMBERS" noResource="true"/>
-          </Properties>
-        </Component>
-        <Component class="javax.swing.JRadioButton" name="rbALPHABET">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="Alphabet"/>
-            <Property name="name" type="java.lang.String" value="rbALPHABET" noResource="true"/>
-          </Properties>
-        </Component>
-        <Component class="javax.swing.JLabel" name="lbSEPARATOR">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="Separator"/>
-            <Property name="name" type="java.lang.String" value="lbSEPARATOR" noResource="true"/>
-          </Properties>
-        </Component>
-        <Component class="javax.swing.JTextField" name="tfSEPARATOR">
-          <Properties>
-            <Property name="name" type="java.lang.String" value="tfSEPARATOR" noResource="true"/>
-          </Properties>
-        </Component>
-        <Component class="javax.swing.JLabel" name="lbCHARACTERS">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="Characters"/>
-            <Property name="name" type="java.lang.String" value="lbCHARACTERS" noResource="true"/>
-          </Properties>
-        </Component>
-        <Component class="javax.swing.JTextField" name="tfCHARACTERS">
-          <Properties>
-            <Property name="name" type="java.lang.String" value="tfCHARACTERS" noResource="true"/>
           </Properties>
         </Component>
       </SubComponents>

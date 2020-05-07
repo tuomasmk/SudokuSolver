@@ -22,13 +22,27 @@ public class SudokuOptionsFrame extends javax.swing.JFrame {
     }
     
     public SudokuOptionsFrame(SudokuGrid grid) {
+        this();
         this.grid = grid;
-        initComponents();
         options = grid.getOptions();
+        initializeOptions();
     }
 
     public SudokuOptions getOptions() {
         return options;
+    }
+    
+    private void initializeOptions() {
+        switch (options.solver) {
+            case HUMAN:
+                rbHUMAN.setSelected(true);
+                break;
+            case BT:
+                rbBACKTRACK.setSelected(true);
+                break;
+            default:
+                rbDANCING_LINKS.setSelected(true);
+        }
     }
 
     /**
@@ -46,14 +60,6 @@ public class SudokuOptionsFrame extends javax.swing.JFrame {
         rbHUMAN = new javax.swing.JRadioButton();
         rbDANCING_LINKS = new javax.swing.JRadioButton();
         rbBACKTRACK = new javax.swing.JRadioButton();
-        jPanel2 = new javax.swing.JPanel();
-        lbIMPORT_TYPE = new javax.swing.JLabel();
-        rbNUMBERS = new javax.swing.JRadioButton();
-        rbALPHABET = new javax.swing.JRadioButton();
-        lbSEPARATOR = new javax.swing.JLabel();
-        tfSEPARATOR = new javax.swing.JTextField();
-        lbCHARACTERS = new javax.swing.JLabel();
-        tfCHARACTERS = new javax.swing.JTextField();
         btOK = new javax.swing.JButton();
         btCANCEL = new javax.swing.JButton();
 
@@ -66,7 +72,7 @@ public class SudokuOptionsFrame extends javax.swing.JFrame {
         rbHUMAN.setText("Human (fastest, cannot solve all sudokus)");
 
         bgSOLVER_GROUP.add(rbDANCING_LINKS);
-        rbDANCING_LINKS.setText("Dancing Links (moderate, can solve most sudokus)");
+        rbDANCING_LINKS.setText("Dancing Links (moderate)");
 
         bgSOLVER_GROUP.add(rbBACKTRACK);
         rbBACKTRACK.setText("Backtrack (slowest, can solve all sudokus)");
@@ -95,65 +101,6 @@ public class SudokuOptionsFrame extends javax.swing.JFrame {
                 .addComponent(rbHUMAN)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(rbBACKTRACK)
-                .addContainerGap(22, Short.MAX_VALUE))
-        );
-
-        lbIMPORT_TYPE.setText("Import Type");
-
-        rbNUMBERS.setText("Numbers");
-        rbNUMBERS.setName("rbNUMBERS"); // NOI18N
-
-        rbALPHABET.setText("Alphabet");
-        rbALPHABET.setName("rbALPHABET"); // NOI18N
-
-        lbSEPARATOR.setText("Separator");
-        lbSEPARATOR.setName("lbSEPARATOR"); // NOI18N
-
-        tfSEPARATOR.setName("tfSEPARATOR"); // NOI18N
-
-        lbCHARACTERS.setText("Characters");
-        lbCHARACTERS.setName("lbCHARACTERS"); // NOI18N
-
-        tfCHARACTERS.setName("tfCHARACTERS"); // NOI18N
-
-        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
-        jPanel2.setLayout(jPanel2Layout);
-        jPanel2Layout.setHorizontalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(rbNUMBERS)
-                        .addComponent(lbIMPORT_TYPE))
-                    .addComponent(rbALPHABET, javax.swing.GroupLayout.Alignment.TRAILING))
-                .addGap(18, 18, 18)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(lbCHARACTERS)
-                    .addComponent(lbSEPARATOR))
-                .addGap(18, 18, 18)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(tfSEPARATOR, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 172, Short.MAX_VALUE))
-                    .addComponent(tfCHARACTERS))
-                .addContainerGap())
-        );
-        jPanel2Layout.setVerticalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(lbIMPORT_TYPE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(rbNUMBERS)
-                    .addComponent(lbSEPARATOR)
-                    .addComponent(tfSEPARATOR, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(rbALPHABET)
-                    .addComponent(lbCHARACTERS)
-                    .addComponent(tfCHARACTERS, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -180,10 +127,9 @@ public class SudokuOptionsFrame extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
                         .addComponent(btOK)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 171, Short.MAX_VALUE)
                         .addComponent(btCANCEL))
                     .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
@@ -193,9 +139,7 @@ public class SudokuOptionsFrame extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 22, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btOK)
                     .addComponent(btCANCEL))
@@ -213,16 +157,6 @@ public class SudokuOptionsFrame extends javax.swing.JFrame {
             options.solver = SudokuOptions.SolverType.DL;
         } else {
             options.solver = SudokuOptions.SolverType.BT;
-        }
-        if (rbNUMBERS.isSelected()) {
-            options.coding = SudokuOptions.Coding.NUMBERS;
-        } else {
-            options.coding = SudokuOptions.Coding.ALPHABET;
-        }
-        options.separator = tfSEPARATOR.getText();
-        options.chars = tfCHARACTERS.getText();
-        if (grid != null) {
-            grid.setOptions(options);
         }
         dispose();
     }//GEN-LAST:event_btOKActionPerformed
@@ -275,17 +209,9 @@ public class SudokuOptionsFrame extends javax.swing.JFrame {
     private javax.swing.JButton btCANCEL;
     private javax.swing.JButton btOK;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel2;
-    private javax.swing.JLabel lbCHARACTERS;
-    private javax.swing.JLabel lbIMPORT_TYPE;
-    private javax.swing.JLabel lbSEPARATOR;
     private javax.swing.JLabel lbSOLVER;
-    private javax.swing.JRadioButton rbALPHABET;
     private javax.swing.JRadioButton rbBACKTRACK;
     private javax.swing.JRadioButton rbDANCING_LINKS;
     private javax.swing.JRadioButton rbHUMAN;
-    private javax.swing.JRadioButton rbNUMBERS;
-    private javax.swing.JTextField tfCHARACTERS;
-    private javax.swing.JTextField tfSEPARATOR;
     // End of variables declaration//GEN-END:variables
 }
