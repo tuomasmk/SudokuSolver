@@ -6,16 +6,18 @@ Testaus on suoritettu yksikkötestaamalla ja vertailemalla algoritmien nopeuksia
 
 Algoritmien nopeuksia verailtiin ratkaisemalla eri kokoisia ja vaikeuksisia sudokuita. Nopeudet on saatu ottamalla keskiarvo useammasta ratkaisusta. Pienemmillä sudokuilla 9x9 ja 16x16 (paitsi backtrack) on käytetty sadan ratkaisun keskiarvoa. Suuremmilla syötteillä tulos on yhden (backtrack) tai muutaman suorituksen (dancing links) keskiarvo. Dancing links algoritmilla yritettiin ratkaista 36x36 sudokua, mutta se ei ratkennut järjellisessä ajassa.
 
+Algoritmeista nopein oli ihmisratkaisija. Ratkaisua voidaan jatkaa joko backtrack- tai dancing links -algoritmilla. Yleiskäyttöisin on ihmisratkaisija yhdistettynä dancing links -algoritmiin. Nopeusero suhteessa pelkkään dancing links -algoritmiin riippuu siitä kuinka pitkälle ihmisratkaisija pääsee. Backtrack hidastuu merkittävästi kun ongelman koko kasvaa, eikä se ole enää järkevä vaihtoehto edes 16x16 sudokuissa.
+
 ![Performance graph](https://github.com/tuomasmk/SudokuSolver/blob/master/Dokumentit/solver_performances.png "Performance graph")
 
-Algoritmi       | Aika (ms) (9x9) | Aika (ms) (16x16) | Aika (ms) (25x25)
---------------- | --------------- | ----------------- | -----------------------
-Ihmis + dl      | 6 * 10^-2      | 2                 | -
-Ihmis + bt      | 5 * 10^-2      | 2                 | -
-Backtrack       | 5 * 10^-2      | 7 * 10^6          | -
-+vaihtoehto     | 8 * 10^-2      | 4 * 10^6          | -
-Reference graph | 9 * 10^-2      | 10 * 10^6          | -
-Dancing Links   | 5 * 10^-2      | 14                | 8,5 * 10^4
+Algoritmi \ Aika(ms) | 9x9       |  16x16    | 25x25 (helppo) | 25x25 (vaikea)
+--------------- | -------------- | --------- | -------------- | --------------
+Ihmis + dl      | 6 * 10^-2      | 2         | 15             | 6,4 * 10^4
+Ihmis + bt      | 5 * 10^-2      | 2         | 15             | -
+Backtrack       | 5 * 10^-2      | 7 * 10^6  | -              | -
++vaihtoehto     | 8 * 10^-2      | 4 * 10^6  | -              | -
+Reference graph | 9 * 10^-2      | 10 * 10^6 | -              | -
+Dancing Links   | 5 * 10^-2      | 14        | 125            | 7,4 * 10^4
 
 Main luokka sisältää testaukseen soveltuvia metodeja. Tällöin ohjelmaa pitää ajaa kehitysympäristöstä.
 

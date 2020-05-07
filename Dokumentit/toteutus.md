@@ -10,6 +10,8 @@ Ohjelma ratkaisee sudokun kolmella eri tavalla:
 
 Ihmisratkaisija etsii oikeita vaihtoehtoja samoilla tavoilla, joilla ihmiset ratkovat sudokuita. Ratkaisija käyttää kahta eri taktiikkaa numeroiden löytämiseen. Ensimmäisessä etsitään soluja, joihin voi sijoittaa vain yhden numeron. Toisessa etsitään rivistä (, sarakkeesta tai neliöstä) numeroita, jotka sopivat vain yhteen soluun. Sudoku ratkaistaan näitä kahta menetelmää vuorottelemalla. Tällä algoritmilla ei pystytä ratkaisemaan kaikkia sudokuita.
 
+Ihmisratkaisijaa saisi vielä parannettua käyttämällä ns. preemptive sets -menetelmää, jossa etsitään pienintä joukkoa soluja ja niihin sopivia numeroita. Tällaisen joukon löydyttyä, kyseiset numerot eivät voi esiintyä muissa rivin, sarakkeen tai neliön soluissa. Parannus ei vielä tee algoritmista kykenevää ratkaisemaan kaikkia sudokuita.
+
 ## Dancing Links
 
 Algoritmi käyttää kehämäisiä, kahteen suuntaan linkitettyjä listoja. Algoritmin perusta on huomata kuinka solmun poistaminen:
@@ -19,6 +21,8 @@ L[R[x]] <- L[x], 	R[L[x]] <- R[x]
 voidaan perua käänteisellä operaatiolla:
 
 [L[R[x]] <- x, 		R[L[x]] <- x
+
+Sudokusta muodostetaan ensin ykkösistä ja nollista koostuva matriisi. Matriisista muodostetaan edelleen linkitetyt listat, joide avulla etsitään ratkaisua.
 
 (Knuth 2000).
 
@@ -77,6 +81,14 @@ Toinen osa hakee kaikki mahdolliset paikat kullekin numerolle rivettäin, sarakk
 Myös algoritmien yhdistetty aikavaativuus on O(n^5).
 
 Algoritmi käyttää kaksiulotteista taulukkoa sudokua varten (n * n) ja hakemistoa, jonka koko on noin n * n.Tilavaativuus on siis O(n^2).
+
+## Parannuksia
+
+Suorituskykytestausta voisi virtaviivaistaa. Suorituskykytestauksen voisi ottaa osaksi graafista käyttöliittymää. Käyttöliittymä ei ole responsiivinen, vaan jää jumiin, kun ongelmaa ratkaistaan. Graafinen liittymä lukee vain yhdentyyppisiä tiedostoja.
+
+Työhön on toteutettu monta optimoitua backtrack algoritmia, jotka eivät kuitenkaan olleet juuri parempia kuin alkuperäinen.
+
+Tehdyt tietorakenteet eivät ole yleiskäyttöisiä.
 
 ## Lähteet
 

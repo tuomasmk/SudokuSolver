@@ -38,14 +38,13 @@ public class Main {
         }
         end = System.currentTimeMillis();
         System.out.println("dls: " + (end - start));
-/*        start = System.currentTimeMillis();
+        start = System.currentTimeMillis();
         for (Sudoku s:sudokus) {
-            System.out.println(s);
             hs.setSudoku(s.copy(s));
-            hs.solveWbt();
+            hs.solveWdl();
         }
         end = System.currentTimeMillis();
-        System.out.println("hwbt: " + (end - start));*/
+        System.out.println("hwdl: " + (end - start));
     }
     
     public static void comparePerformances(List<Sudoku> sudokus) {
@@ -228,18 +227,18 @@ public class Main {
         List<Sudoku> sudokus = new ArrayList();
         FileReader fr = new FileReader();
         List<String> filenames = new ArrayList();
-        filenames.add("Alphabet sudokus/9x9beginnerA.csv");
-        filenames.add("Alphabet sudokus/16x16beginnerA.csv");
-        filenames.add("Alphabet sudokus/25x25beginnerA.csv");
-        filenames.add("Alphabet sudokus/9x9confirmedA.csv");
-        filenames.add("Alphabet sudokus/16x16confirmedA.csv");
-        filenames.add("Alphabet sudokus/25x25advancedA.csv");
-        //filenames.add("Alphabet sudokus/25x25expertA.csv");
+        //filenames.add("Alphabet sudokus/9x9beginnerA.csv");
+        //filenames.add("Alphabet sudokus/16x16beginnerA.csv");
+        //filenames.add("Alphabet sudokus/25x25beginnerA.csv");
+        //filenames.add("Alphabet sudokus/9x9confirmedA.csv");
+        //filenames.add("Alphabet sudokus/16x16confirmedA.csv");
+        //filenames.add("Alphabet sudokus/25x25advancedA.csv");
+        filenames.add("Alphabet sudokus/25x25expertA.csv");
         for (String file : filenames) {
             sudokus.add(fr.readCommaSeparatedAlphabet(file, ";"));
         }
-        humanPerformance(sudokus, 100);
-        //dancingLinksPerformance(sudokus, 100);
+        humanPerformance(sudokus, 10);
+        dancingLinksPerformance(sudokus, 10);
         //backtrackPerformance(sudokus, 100);
         //referenceGraphPerformance(sudokus, 100);
     }
