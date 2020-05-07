@@ -135,12 +135,15 @@ public class Sudoku {
      * @return  Textual representation of the sudoku.
      */
     String f(int a) {
+        String p5 = "0121212121213121212121213121212121213121212121213121212121213121212121214";
         String p4 = "012121212131212121213121212121312121212131212121214";
         String p3 = "012121213121212131212121312121214";
         String p2 = "012131214";
         String p1 = "0121213121213121214";
         String pX;
         switch (a) {
+            case 36: pX = p5;
+                break;
             case 25: pX = p4;
                 break;
             case 4: pX = p2;
@@ -163,11 +166,15 @@ public class Sudoku {
             r += "\n";                                              //  then append a new line
         }
                                                                 // For each number in the input
-        String alphabets = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";                                                            
+        String alphabets = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+        String chars = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
         for (int i = 0; i < length; i++) {
             for (int j = 0; j < length; j++) {
                 int temp = numbers[i][j];
-                if (a > 9) {
+                if (a > 25) {
+                    r = r.replaceFirst("x" , temp > 0 ? "" + chars.charAt(temp-1) : " ");
+                }
+                else if (a > 9) {
                     r = r.replaceFirst("x" , temp > 0 ? "" + alphabets.charAt(temp-1) : " ");
                 } else {
                     r = r.replaceFirst("x" , temp > 0 ? "" + temp : " ");                 //  replace the first 'x' with that number.

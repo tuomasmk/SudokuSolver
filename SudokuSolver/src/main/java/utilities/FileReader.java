@@ -14,6 +14,25 @@ public class FileReader {
     public FileReader() {
     }
     
+    public Sudoku readByChar(int size, String filename, String chars) throws FileNotFoundException {
+        File file = new File(filename);
+        Scanner scanner = new Scanner(file);
+        String current = scanner.nextLine();
+        int[][] numbers = new int[size][size];
+        int j = 0;
+        for (int i = 0; i < Math.min(current.length(), size); i++) {
+            numbers[j][i] = Math.max(0, chars.indexOf(current.charAt(i)));
+        }
+        while (scanner.hasNextLine()) {
+            j++;
+            current = scanner.nextLine();
+            for (int i = 0; i < Math.min(current.length(), size); i++) {
+                numbers[j][i] = Math.max(0, chars.indexOf(current.charAt(i)));
+            }
+        }
+        return new Sudoku(numbers);
+    }
+    
     /**
      * Reads sudoku from a file containing string of numbers in the first column.
      * @param size      sudoku size.
