@@ -4,20 +4,22 @@ Testaus on suoritettu yksikkötestaamalla ja vertailemalla algoritmien nopeuksia
 
 ## Algoritmien nopeuksien vertailua
 
-Algoritmien nopeuksia verailtiin ratkaisemalla eri kokoisia ja vaikeuksisia sudokuita. Nopeudet on saatu ottamalla keskiarvo useammasta ratkaisusta. Pienemmillä sudokuilla 9x9 ja 16x16 (paitsi backtrack) on käytetty sadan ratkaisun keskiarvoa. Suuremmilla syötteillä tulos on yhden (backtrack) tai muutaman suorituksen (dancing links) keskiarvo. Dancing links algoritmilla yritettiin ratkaista 36x36 sudokua, mutta se ei ratkennut järjellisessä ajassa.
+Algoritmien nopeuksia verailtiin ratkaisemalla eri kokoisia ja vaikeuksisia sudokuita. Nopeudet on saatu ottamalla keskiarvo useammasta ratkaisusta. Pienemmillä sudokuilla 9x9 ja 16x16 (paitsi backtrack) on käytetty sadan ratkaisun keskiarvoa. Suuremmilla syötteillä tulos on yhden (backtrack) tai kymmenen suorituksen (dancing links) keskiarvo. 36x36 sudokulla tulos on yhden ratkaisun kesto.
 
 Algoritmeista nopein oli ihmisratkaisija. Ratkaisua voidaan jatkaa joko backtrack- tai dancing links -algoritmilla. Yleiskäyttöisin on ihmisratkaisija yhdistettynä dancing links -algoritmiin. Nopeusero suhteessa pelkkään dancing links -algoritmiin riippuu siitä kuinka pitkälle ihmisratkaisija pääsee. Backtrack hidastuu merkittävästi kun ongelman koko kasvaa, eikä se ole enää järkevä vaihtoehto edes 16x16 sudokuissa.
 
+Dancing links algoritmissa tehty optimointi on toimivaa. Vaikka dancing links ja backtrack algoritmeilla on sama pahimman tapauksen aikavaativuus, on dancing links käytännössä huomattavasti nopeampi. Kuten alla olevasta kuvaajasta nähdään, vie 16x16 sudokun ratkaiseminen backtrack algoritmilla lähes saman verran aikaa kuin 36x36 sudokun ratkaiseminen dancing links algoritmilla. 36x36 sudoku on noin 10^1700 kertaa vaativampi ratkaistava kuin 16x16 sudoku tai noin 10^1350 kertaa vaativampi, jos oletetaan että ratkaistava sudoku sisältää 21 % numeroista valmiina. Oletus pohjautuu siihen, että 9x9 sudokussa täytyy olla vähintään 17 vihjettä, jotta sillä voi olla yksikäsitteinen ratkaisu.
+
 ![Performance graph](https://github.com/tuomasmk/SudokuSolver/blob/master/Dokumentit/solver_performances.png "Performance graph")
 
-Algoritmi \ Aika(ms) | 9x9       |  16x16    | 25x25 (helppo) | 25x25 (vaikea)
---------------- | -------------- | --------- | -------------- | --------------
-Ihmis + dl      | 6 * 10^-2      | 2         | 15             | 6,4 * 10^4
-Ihmis + bt      | 5 * 10^-2      | 2         | 15             | -
-Backtrack       | 5 * 10^-2      | 7 * 10^6  | -              | -
-+vaihtoehto     | 8 * 10^-2      | 4 * 10^6  | -              | -
-Reference graph | 9 * 10^-2      | 10 * 10^6 | -              | -
-Dancing Links   | 5 * 10^-2      | 14        | 125            | 7,4 * 10^4
+Algoritmi \ Aika(ms) | 9x9       |  16x16    | 25x25 (helppo) | 25x25 (vaikea) | 36x36
+--------------- | -------------- | --------- | -------------- | -------------- | -----
+Ihmis + dl      | 6 * 10^-2      | 2         | 15             | 6,4 * 10^4     | 10,7 * 10^6
+Ihmis + bt      | 5 * 10^-2      | 2         | 15             | -              | -
+Backtrack       | 5 * 10^-2      | 7 * 10^6  | -              | -              | -
++vaihtoehto     | 8 * 10^-2      | 4 * 10^6  | -              | -              | -
+Reference graph | 9 * 10^-2      | 10 * 10^6 | -              | -              | -
+Dancing Links   | 5 * 10^-2      | 14        | 125            | 7,4 * 10^4     | 11,3 * 10^6
 
 Main luokka sisältää testaukseen soveltuvia metodeja. Tällöin ohjelmaa pitää ajaa kehitysympäristöstä.
 
