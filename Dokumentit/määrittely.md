@@ -7,7 +7,7 @@ Toteutettava algoritmi käyttää syvyyssuuntaista hakua käydäkseen läpi eri 
 Sudoku on kaksiulotteinen taulukko, joten tietorakenteena käytetään kaksiulotteista taulukkoa.
 
 ## Syötteet
-Ohjelma lukee ratkaistavan sudokun tiedostosta. Sudoku on annettu riveittäin numerot erotettuna pilkulla ",". Tuntemattomien numeroiden paikalla voidaan antaa numero 0 tai jättää paikka tyhjäksi.
+Ohjelma lukee ratkaistavan sudokun tiedostosta. Sudoku on annettu riveittäin kirjaimet (A = 1, B = 2, ...) erotettuna puolipisteellä ";". Tuntemattomien numeroiden paikka jätetään tyhjäksi.
 
 Tiedostosta luetaan sudoku kaksiulotteiseen taulukkoon.
 
@@ -19,16 +19,6 @@ Mahdollisia ratkaisuja sudokulle on noin 6,671 * 10^21 (Felgenhauer 2005). Taval
 Pahimmassa tapauksessa jokaiseen ruutuun kokeiltaisiin jokaista mahdollista arvoa eli vaihtoehtoja olsi 9^(9 * 9). Yllä esitetyn perusteella 17 ruudussa on vähintään arvo, jolloin pahimman tapauksen aikavaativuus olisi 9^64.
 
 ## Aika- ja tilavaativuus
-
-Neliön koko | Numeroiden määrä | Sudokun koko
------------ | ---------------- | ------------
-1 | 1 | 1
-2 | 4 | 16
-3 | 9 | 81
-4 | 16 | 256
-5 | 25 | 625
-
-Käytettyjen numeroiden määrä on neliön sivun pituuden neliö ja sudokun ruutujen määrä on neliön sivun pituuden neljäs potenssi. Kun syötteen arvona käytetään käytettävien numeroiden määrää ja kyseessä on neliönmuotoinen sudoku:
 
 Aikavaativuus on O(n^(n * n)).
 
